@@ -6,14 +6,17 @@ abstract public class Enemy : MonoBehaviour {
 
     // Use this for initialization
     public int health;
-    private bool AIActive;
-
+    private bool AIActive = true;
+    protected GameObject player;
+    protected int damage;
 
     private const float PARTICLE_LIFETIME = 2f;
 	void Start () {
-        AIActive = true;
+        
 	}
-	
+	void Update()
+    {
+    }
 	// Update is called once per frame
     public void spawn(int x, int y)
     {
@@ -23,6 +26,7 @@ abstract public class Enemy : MonoBehaviour {
     {
         AIActive = x;
     }
+    
     public void takeDamage(int damage)
     {
         health -= damage;
@@ -31,8 +35,10 @@ abstract public class Enemy : MonoBehaviour {
             this.kill();
         }
     }
-    public abstract void dealDamage();
-    
+    public void dealDamage()
+    {
+        //player.getComponent<Player>().takeDamage(damage);
+    }
 
     public void kill()
     {
