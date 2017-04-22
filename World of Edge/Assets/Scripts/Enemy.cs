@@ -20,7 +20,7 @@ abstract public class Enemy : MonoBehaviour
     protected GameObject player;
     protected int damage;
     protected int enemyType;
-    private const float PARTICLE_LIFETIME = 2f;
+    public float deathDelay;
     private float flashTimer;
 
     public void DoUpdate(float deltaTime)
@@ -39,7 +39,7 @@ abstract public class Enemy : MonoBehaviour
         if (health.health <= 0)
         {
             deglue();
-            StartCoroutine(destroyAfterDelay(PARTICLE_LIFETIME));
+            StartCoroutine(destroyAfterDelay(deathDelay));
         }
     }
 
