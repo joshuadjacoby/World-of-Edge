@@ -29,11 +29,18 @@ public class Shooter : MonoBehaviour
                 // TODO : FIX THIS SHIST
                 Instantiate(bulletPrefab);
                 Bullet bullet = bulletPrefab.GetComponent<Bullet>();
+
                 bullet.transform.position = transform.position;
-                Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.y);
-                bullet.direction = (Camera.main.ScreenToWorldPoint(screenPoint) - transform.position).normalized;
-                Debug.Log(bullet.direction);
-                bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.down);
+
+                Vector3 shootDirection = Input.mousePosition;
+                shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
+                shootDirection = shootDirection - transform.position;
+                shootDirection.y = 0;
+                shootDirection = shootDirection.normalized;
+                Debug.DrawRay(transform.position, shootDirection);
+                bullet.direction = shootDirection;
+                
+                bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
             }
         }
 	}

@@ -2,25 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-        Vector3 shootDirection = Input.mousePosition;
-        shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
-        shootDirection = shootDirection - transform.position;
-        shootDirection.z = 0.0f;
-        shootDirection = shootDirection.normalized;
-
-        gameObject.GetComponent<Rigidbody>().AddForce(shootDirection * 1000);
-       
-    }
+public class Bullet : MonoBehaviour
+{
+    public float lifeTimer;
+    public float speed;
+    public Vector3 direction;
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (!gameObject.GetComponent<Renderer>().isVisible)
+        if (lifeTimer <= 0)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            transform.position += direction * speed * Time.fixedDeltaTime;
         }
     }
 }
