@@ -69,7 +69,7 @@ abstract public class Enemy : MonoBehaviour {
     {
 
     }
-    void OnCollisionEnter(Collision2D coll)
+    void OnCollisionEnter(Collision coll)
     {
         if(coll.gameObject.CompareTag("Player"))
         {
