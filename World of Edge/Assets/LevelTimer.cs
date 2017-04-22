@@ -16,6 +16,10 @@ public class LevelTimer : MonoBehaviour {
         if(timeRemaining >= 0)
         {
             timeRemaining -= Time.deltaTime;
+            if(timeRemaining < 6)
+            {
+                timerText.color = Color.red;
+            }
             timerText.text = getTime((int)timeRemaining);
         } else
         {
