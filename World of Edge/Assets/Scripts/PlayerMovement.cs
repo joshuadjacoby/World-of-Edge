@@ -8,6 +8,11 @@ public class PlayerMovement : MonoBehaviour
     public float maxMoveSpeed;
     public float friction;
 
+    void Start()
+    {
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Bullet"), LayerMask.NameToLayer("Bullet"));
+    }
+
     public void Update()
     {
         Vector3 moveDir = new Vector3();
