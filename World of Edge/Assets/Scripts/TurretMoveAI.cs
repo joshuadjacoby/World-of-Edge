@@ -9,23 +9,22 @@ public class TurretMoveAI : Enemy {
     private List<GameObject> enemyList;
     private GameObject targetEnemy;
     private TurretShootAI turretShootAI;
-	void Start () {
+    void Start () {
         turretShootAI = GetComponentInChildren<TurretShootAI>();
         //turretShootAI.enabled = false;
         //When glued to something, activate turretShootAI
         player = GameObject.FindGameObjectWithTag("Player");
-        health.health = 100;
         damage = 10;
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();
         agent.destination = GameObject.Find("Shooter").transform.position;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
         agent.destination = GameObject.Find("Shooter").transform.position;
-
     }
+
     private GameObject getNearestEnemy()
     {
         //still needs to blacklist runners

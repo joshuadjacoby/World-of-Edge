@@ -46,11 +46,12 @@ abstract public class Enemy : MonoBehaviour
     public void kill()
     {
         deglue();
-        destroyAfterDelay(PARTICLE_LIFETIME);
+        StartCoroutine(destroyAfterDelay(PARTICLE_LIFETIME));
     }
 
     public IEnumerator destroyAfterDelay(float duration)
     {
+        Debug.Log("ASDASD");
         float elapsedTime = 0;
         while (elapsedTime < duration)
         {
