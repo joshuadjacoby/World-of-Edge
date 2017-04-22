@@ -30,6 +30,7 @@ public class ShooterAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
+        DoUpdate(Time.deltaTime);
         
         if(LOS && (agent.transform.position-transform.position).magnitude < shootRadius)
         {
