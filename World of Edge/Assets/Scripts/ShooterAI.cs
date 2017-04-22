@@ -22,8 +22,9 @@ public class ShooterAI : Enemy {
         agent.destination = player.transform.position;
         damage = 10;
         LOS = false;
-        fireTimer = fireDelay;
+        fireTimer = 0;
         StartCoroutine(LOSLoop());
+        enemyType = (int)enemyTypes.SHOOTER;
 	}
 	
 	// Update is called once per frame
