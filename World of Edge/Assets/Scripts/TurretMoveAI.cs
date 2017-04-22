@@ -22,6 +22,7 @@ public class TurretMoveAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
+        DoUpdate();
         agent.destination = GameObject.Find("Shooter").transform.position;
     }
 

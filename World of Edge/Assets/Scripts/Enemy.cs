@@ -19,16 +19,12 @@ abstract public class Enemy : MonoBehaviour
     protected int enemyType;
     private const float PARTICLE_LIFETIME = 2f;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
+    public void DoUpdate()
     {
         if (health.health <= 0)
         {
-            kill();
+            deglue();
+            StartCoroutine(destroyAfterDelay(PARTICLE_LIFETIME));
         }
     }
 
@@ -42,16 +38,9 @@ abstract public class Enemy : MonoBehaviour
     {
         AIActive = x;
     }
-
-    public void kill()
-    {
-        deglue();
-        StartCoroutine(destroyAfterDelay(PARTICLE_LIFETIME));
-    }
-
+    
     public IEnumerator destroyAfterDelay(float duration)
     {
-        Debug.Log("ASDASD");
         float elapsedTime = 0;
         while (elapsedTime < duration)
         {
