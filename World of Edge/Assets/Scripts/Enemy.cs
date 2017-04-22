@@ -13,14 +13,28 @@ abstract public class Enemy : MonoBehaviour
     }
 
     public Health health;
+    public MeshRenderer meshRenderer;
+    public float flashDuration;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
     protected int enemyType;
     private const float PARTICLE_LIFETIME = 2f;
+    private float flashTimer;
 
-    public void DoUpdate()
+    public void DoUpdate(float deltaTime)
     {
+        if (flashTimer > 0)
+        {
+            float colorDiff = 1 - flashTimer / flashDuration;
+            meshRenderer.material.SetColor("_Color", new Color(1, colorDiff, colorDiff));
+            flashTimer -= deltaTime;
+        }
+        else
+        {
+            meshRenderer.material.SetColor("_Color", Color.white);
+            flashTimer = 0;
+        }
         if (health.health <= 0)
         {
             deglue();
@@ -58,6 +72,12 @@ abstract public class Enemy : MonoBehaviour
     private void deglue()
     {
 
+    }
+
+    public void Flash()
+    {
+        meshRenderer.material.SetColor("_Color", Color.red);
+        flashTimer = flashDuration;
     }
 
     void OnCollisionEnter(Collision coll)
