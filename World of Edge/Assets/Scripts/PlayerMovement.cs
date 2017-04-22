@@ -29,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
             moveDir += Vector3.right;
         }
 
-        navMeshAgent.velocity += moveDir * moveAcceleration * Time.deltaTime;
+        navMeshAgent.velocity = navMeshAgent.velocity + moveDir * moveAcceleration * Time.deltaTime
+                                                      - navMeshAgent.velocity * friction * Time.deltaTime;
         if (navMeshAgent.velocity.magnitude > maxMoveSpeed)
         {
             navMeshAgent.velocity = navMeshAgent.velocity.normalized * maxMoveSpeed;
