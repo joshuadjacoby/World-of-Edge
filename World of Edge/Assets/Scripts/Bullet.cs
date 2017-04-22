@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
         else
         {
             transform.position += direction * speed * Time.fixedDeltaTime;
+            lifeTimer -= Time.fixedDeltaTime;
         }
     }
 
