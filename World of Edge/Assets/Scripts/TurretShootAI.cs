@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretShootAI : MonoBehaviour {
+public class TurretShootAI : Enemy {
 
     // Use this for initialization
     private bool LOS;
@@ -33,6 +33,7 @@ public class TurretShootAI : MonoBehaviour {
         {
             fireTimer = 0;
         }
+        DoUpdate(Time.deltaTime);
 	}
     private IEnumerator LOSLoop()
     {

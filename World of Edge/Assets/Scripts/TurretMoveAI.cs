@@ -22,12 +22,12 @@ public class TurretMoveAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-        DoUpdate(Time.deltaTime);
         ShooterAI shooter = FindObjectOfType<ShooterAI>();
         if (shooter != null)
         {
             agent.destination = shooter.transform.position;
         }
+        DoUpdate(Time.deltaTime);
     }
 
     private GameObject getNearestEnemy()
