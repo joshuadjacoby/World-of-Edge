@@ -5,11 +5,17 @@ using UnityEngine;
 abstract public class Enemy : MonoBehaviour {
 
     // Use this for initialization
+    public enum enemyTypes
+    {
+        RUNNERAI,
+        SHOOTER,
+        TURRET
+    }
     public int health;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
-
+    protected int enemyType;
     private const float PARTICLE_LIFETIME = 2f;
 	void Start () {
         
@@ -63,7 +69,7 @@ abstract public class Enemy : MonoBehaviour {
     {
 
     }
-    void OnCollisionEnter2D(Collision2D coll)
+    void OnCollisionEnter(Collision2D coll)
     {
         if(coll.gameObject.CompareTag("Player"))
         {
