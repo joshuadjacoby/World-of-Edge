@@ -5,6 +5,7 @@ public class Shooter : MonoBehaviour
     public KeyCode shootKey;
     public GameObject bulletPrefab;
     public float cooldown;
+    public float damageMultiplier;
 
     private float cooldownTimer;
 
@@ -25,10 +26,10 @@ public class Shooter : MonoBehaviour
             else
             {
                 cooldownTimer = cooldown;
-
-                // TODO : FIX THIS SHIST
-                Instantiate(bulletPrefab);
-                Bullet bullet = bulletPrefab.GetComponent<Bullet>();
+                
+                GameObject bulletObject = Instantiate(bulletPrefab);
+                
+                Bullet bullet = bulletObject.GetComponent<Bullet>();
 
                 bullet.transform.position = transform.position;
 
@@ -41,6 +42,8 @@ public class Shooter : MonoBehaviour
                 bullet.direction = shootDirection;
                 
                 bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
+
+                bullet.damage *= damageMultiplier;
             }
         }
 	}

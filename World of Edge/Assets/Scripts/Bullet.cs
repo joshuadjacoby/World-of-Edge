@@ -6,10 +6,11 @@ public class Bullet : MonoBehaviour
 {
     public float lifeTimer;
     public float speed;
+    public float damage;
     public Vector3 direction;
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate () {
         if (lifeTimer <= 0)
         {
             Destroy(gameObject);
@@ -17,6 +18,16 @@ public class Bullet : MonoBehaviour
         else
         {
             transform.position += direction * speed * Time.fixedDeltaTime;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Health health = collision.gameObject.GetComponent<Health>();
+        if (health != null)
+        {
+            health.health -= damage;
+            Destroy(gameObject);
         }
     }
 }
