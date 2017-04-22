@@ -54,7 +54,6 @@ public class TurretShootAI : MonoBehaviour {
     }
     private void fireAt(Vector3 target)
     {
-        print("I SHOOT");
     }
     private void aimAt(Vector3 target)
     {

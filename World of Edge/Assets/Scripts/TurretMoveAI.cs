@@ -18,12 +18,13 @@ public class TurretMoveAI : Enemy {
         damage = 10;
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = player.transform.position;
+        agent.destination = GameObject.Find("Shooter").transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
+        agent.destination = GameObject.Find("Shooter").transform.position;
+
     }
     private GameObject getNearestEnemy()
     {
