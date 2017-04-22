@@ -7,13 +7,11 @@ abstract public class Enemy : MonoBehaviour {
     // Use this for initialization
     public int health;
     private bool AIActive;
-    private GameObject player;
 
 
     private const float PARTICLE_LIFETIME = 2f;
 	void Start () {
         AIActive = true;
-        player = GameObject.FindGameObjectWithTag("player");
 	}
 	
 	// Update is called once per frame
@@ -33,7 +31,8 @@ abstract public class Enemy : MonoBehaviour {
             this.kill();
         }
     }
-    public abstract void dealDamage(int damage);
+    public abstract void dealDamage();
+    
 
     public void kill()
     {
@@ -60,7 +59,14 @@ abstract public class Enemy : MonoBehaviour {
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-
+        if(coll.gameObject.CompareTag("Player"))
+        {
+            dealDamage();
+        }
+        if (coll.gameObject.CompareTag("Enemy"))
+        {
+            //to be implemented
+        }
     }
 
 
