@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class RunnerAI : Enemy {
 
     // Use this for initialization
-    public float speed;
     private NavMeshAgent agent;
     private GameObject player;
     private const int DAMAGE = 10;
@@ -20,8 +19,8 @@ public class RunnerAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        agent.destination = player.transform.position;
+    }
 
     public override void dealDamage()
     {
