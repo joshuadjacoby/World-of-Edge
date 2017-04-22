@@ -14,7 +14,7 @@ public class TurretMoveAI : Enemy {
         //turretShootAI.enabled = false;
         //When glued to something, activate turretShootAI
         player = GameObject.FindGameObjectWithTag("Player");
-        health = 100;
+        health.health = 100;
         damage = 10;
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();

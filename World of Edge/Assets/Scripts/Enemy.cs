@@ -4,7 +4,6 @@ using UnityEngine;
 
 abstract public class Enemy : MonoBehaviour
 {
-
     // Use this for initialization
     public enum enemyTypes
     {
@@ -12,16 +11,19 @@ abstract public class Enemy : MonoBehaviour
         SHOOTER,
         TURRET
     }
+
     public Health health;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
     protected int enemyType;
     private const float PARTICLE_LIFETIME = 2f;
+
     void Start()
     {
 
     }
+
     void Update()
     {
         if (health.health <= 0)
@@ -29,11 +31,13 @@ abstract public class Enemy : MonoBehaviour
             kill();
         }
     }
+
     // Update is called once per frame
     public void spawn(int x, int y)
     {
         transform.position = new Vector3(x, y);
     }
+
     public void setAI(bool x)
     {
         AIActive = x;
@@ -44,6 +48,7 @@ abstract public class Enemy : MonoBehaviour
         deglue();
         destroyAfterDelay(PARTICLE_LIFETIME);
     }
+
     public IEnumerator destroyAfterDelay(float duration)
     {
         float elapsedTime = 0;
@@ -54,14 +59,17 @@ abstract public class Enemy : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
     private void glue()
     {
 
     }
+
     private void deglue()
     {
 
     }
+
     void OnCollisionEnter(Collision coll)
     {
         Health health = coll.gameObject.GetComponent<Health>();
