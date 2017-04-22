@@ -16,7 +16,7 @@ public class GluerAI : Enemy {
 	}
 	
     void Update() {
-        DoUpdate();
+        DoUpdate(Time.deltaTime);
     }
     void moveToClosest() {
         GameObject closest = findClosest();

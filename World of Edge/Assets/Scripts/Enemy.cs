@@ -15,6 +15,7 @@ abstract public class Enemy : MonoBehaviour
     public Health health;
     public MeshRenderer meshRenderer;
     public float flashDuration;
+    public EnemyManager enemyManager;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
