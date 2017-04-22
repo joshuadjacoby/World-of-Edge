@@ -14,6 +14,7 @@ public class ShooterAI : Enemy {
     private Collider playerCollider;
     private bool LOS;
     private const float LOSREPEAT = 0.5f;
+
     //get generic shoot script
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");

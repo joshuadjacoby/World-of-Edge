@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class Enemy : MonoBehaviour {
+abstract public class Enemy : MonoBehaviour
+{
 
     // Use this for initialization
     public enum enemyTypes
@@ -11,19 +12,24 @@ abstract public class Enemy : MonoBehaviour {
         SHOOTER,
         TURRET
     }
-    public int health;
+    public Health health;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
     protected int enemyType;
     private const float PARTICLE_LIFETIME = 2f;
-	void Start () {
-        
-	}
-	void Update()
+    void Start()
     {
+
     }
-	// Update is called once per frame
+    void Update()
+    {
+        if (health.health <= 0)
+        {
+            kill();
+        }
+    }
+    // Update is called once per frame
     public void spawn(int x, int y)
     {
         transform.position = new Vector3(x, y);
@@ -31,19 +37,6 @@ abstract public class Enemy : MonoBehaviour {
     public void setAI(bool x)
     {
         AIActive = x;
-    }
-    
-    public void takeDamage(int damage)
-    {
-        health -= damage;
-        if(health <= 0)
-        {
-            this.kill();
-        }
-    }
-    public void dealDamage()
-    {
-        //player.getComponent<Player>().takeDamage(damage);
     }
 
     public void kill()
@@ -54,7 +47,7 @@ abstract public class Enemy : MonoBehaviour {
     public IEnumerator destroyAfterDelay(float duration)
     {
         float elapsedTime = 0;
-        while(elapsedTime < duration)
+        while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -71,15 +64,17 @@ abstract public class Enemy : MonoBehaviour {
     }
     void OnCollisionEnter(Collision coll)
     {
-        if(coll.gameObject.CompareTag("Player"))
+        Health health = coll.gameObject.GetComponent<Health>();
+        if (health != null)
         {
-            dealDamage();
-        }
-        if (coll.gameObject.CompareTag("Enemy"))
-        {
-            //to be implemented
+            if (coll.gameObject.CompareTag("Player"))
+            {
+                health.health -= damage;
+            }
+            if (coll.gameObject.CompareTag("Enemy"))
+            {
+                //to be implemented
+            }
         }
     }
-
-
 }
