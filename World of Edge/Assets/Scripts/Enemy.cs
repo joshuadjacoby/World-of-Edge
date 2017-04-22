@@ -21,7 +21,7 @@ abstract public class Enemy : MonoBehaviour
     protected int damage;
     protected int enemyType;
     public float deathDelay;
-    private float flashTimer;
+    private float flashTimer = 0.15f;
 
     public void DoUpdate(float deltaTime)
     {
