@@ -5,14 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     // Use this for initialization
-    private enum gunTypes
-    {
-        gun0,
-        gun1,
-        gun2,
-        gun3,
-        gun4
-    }
+    
     private Health health;
     private int edgeCount;
     private int playerLevel;
@@ -20,8 +13,14 @@ public class Player : MonoBehaviour {
     private const int TO_LVL_2 = 100;
     private const int TO_LVL_3 = 200;
     private const int TO_LVL_4 = 300;
+    private const int HIGH_VELOCITY = 0;
+    private const int PIERCING = 1;
+    private const int RICOCHET = 2;
+    private const int EXPLOSIVE = 3;
+    private const int SPREAD = 4;
     private int[] edgeReqs;
-    private int gunType;
+    private int gun;
+    private int nextGun;
     private MeshRenderer playerRenderer;
     void Start () {
         //health = GetComponent<Health>();
@@ -29,8 +28,16 @@ public class Player : MonoBehaviour {
         playerLevel = 0;
         playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
         edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
-        gunType = (int)gunTypes.gun0;
-	}
+        gun = HIGH_VELOCITY;
+        while (true)
+        {
+            nextGun = (int)Random.Range(0, 4.9999f);
+            if (nextGun != gun)
+            {
+                break;
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -58,11 +65,23 @@ public class Player : MonoBehaviour {
     }
     public int getGunType()
     {
-        return gunType;
+        return gun;
+    }
+    public int getNextGunType()
+    {
+        return nextGun;
     }
     private void getNewGun()
     {
-        //to be implemented
+        gun = nextGun;
+        while (true)
+        {
+            nextGun = (int)Random.Range(0, 4.9999f);
+            if(nextGun != gun)
+            {
+                break;
+            }
+        }
     }
     public int getEdgeCount()
     {
