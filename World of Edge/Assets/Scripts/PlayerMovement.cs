@@ -3,21 +3,10 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public NavMeshAgent navMeshAgent;
+    public Rigidbody rbody;
     public float moveAcceleration;
     public float maxMoveSpeed;
     public float friction;
-
-    void Start()
-    {
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("PlayerBullet"), LayerMask.NameToLayer("PlayerBullet"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("PlayerBullet"), LayerMask.NameToLayer("EnemyBullet"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("PlayerBullet"), LayerMask.NameToLayer("NeutralBullet"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("EnemyBullet"), LayerMask.NameToLayer("EnemyBullet"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("NeutralBullet"), LayerMask.NameToLayer("NeutralBullet"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("PlayerBullet"), LayerMask.NameToLayer("Player"));
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("EnemyBullet"), LayerMask.NameToLayer("Enemy"));
-    }
 
     public void Update()
     {
@@ -40,11 +29,11 @@ public class PlayerMovement : MonoBehaviour
             moveDir += Vector3.right;
         }
 
-        navMeshAgent.velocity = navMeshAgent.velocity + moveDir * moveAcceleration * Time.deltaTime
-                                                      - navMeshAgent.velocity * friction * Time.deltaTime;
-        if (navMeshAgent.velocity.magnitude > maxMoveSpeed)
+        rbody.velocity = rbody.velocity + moveDir * moveAcceleration * Time.deltaTime
+                                        - rbody.velocity * friction * Time.deltaTime;
+        if (rbody.velocity.magnitude > maxMoveSpeed)
         {
-            navMeshAgent.velocity = navMeshAgent.velocity.normalized * maxMoveSpeed;
+            rbody.velocity = rbody.velocity.normalized * maxMoveSpeed;
         }
     }
 }
