@@ -2,34 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadeShot : MonoBehaviour {
-    public float lifeTimer;
-    public float speed;
-    public float damage;
-    public Vector3 direction;
-
+public class GrenadeShot : BulletParent {
     public float blastRadius;
+    public LayerMask hitLayer;
 
-    void FixedUpdate () {
-        if (lifeTimer <= 0)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            transform.position += direction * speed * Time.fixedDeltaTime;
-            lifeTimer -= Time.fixedDeltaTime;
-        }
+    void FixedUpdate() {
+        move();
+        updateLifeTime();
     }
 
     void OnCollisionEnter(Collision collision) 
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius, hitLayer);
+        Debug.Log(hitColliders.Length);
         foreach(Collider hit in hitColliders) {
-            Health health = collision.gameObject.GetComponent<Health>();
+            Health health = hit.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                Enemy enemy = hit.gameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
                     enemy.Flash();
@@ -37,13 +27,10 @@ public class GrenadeShot : MonoBehaviour {
                 health.takeDamage((int)damage);
                 Destroy(gameObject);
             }
-            else
-            {
-                if (collision.gameObject.tag == "Wall")
-                {
-                    Destroy(gameObject);
-                }
-            }
+        }
+        if (collision.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
         }
     }
 }

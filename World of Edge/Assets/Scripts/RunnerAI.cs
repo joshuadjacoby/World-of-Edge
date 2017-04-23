@@ -8,7 +8,6 @@ public class RunnerAI : Enemy {
 
     // Use this for initialization
     private NavMeshAgent agent;
-    private const int DAMAGE = 10;
 
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -22,15 +21,4 @@ public class RunnerAI : Enemy {
         agent.destination = player.transform.position;
         DoUpdate(Time.deltaTime);
     }
-
-    void OnCollisionEnter(Collision coll)
-    {
-        Player playerObj = coll.gameObject.GetComponent<Player>();
-        if (playerObj != null)
-        {
-            coll.gameObject.GetComponent<Health>().takeDamage(DAMAGE);
-            Destroy(gameObject);
-        }
-    }
-
 }
