@@ -9,11 +9,12 @@ public class Player : MonoBehaviour {
     private int edgeCount;
     private int playerLevel;
     private const int EDGES_PER_LEVEL = 10;
-
+    private MeshRenderer playerRenderer;
     void Start () {
         //health = GetComponent<Health>();
         edgeCount = 0;
         playerLevel = 0;
+        playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -37,10 +38,24 @@ public class Player : MonoBehaviour {
     {
         return playerLevel;
     }
-    
+    public void flash()
+    {
+        StartCoroutine(flashPlayer(0.7f));
+    }
+    public IEnumerator flashPlayer(float duration)
+    {
+        print("FLASH");
+        float elapsedTime = 0f;
+        while(elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            playerRenderer.material.SetColor("_Color", Color.Lerp(Color.red,Color.white,elapsedTime/duration));
+            yield return null;
+        }
+        
+    }
     void OnCollisionEnter(Collision coll)
     {
-        Debug.Log("COLLISION");
         EdgePickup edge = coll.gameObject.GetComponent<EdgePickup>();
         if(edge != null)
         {
