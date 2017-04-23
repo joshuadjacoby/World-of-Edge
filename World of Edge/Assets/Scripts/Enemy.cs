@@ -36,7 +36,7 @@ abstract public class Enemy : MonoBehaviour
             meshRenderer.material.SetColor("_Color", Color.white);
             flashTimer = 0;
         }
-        if (health.health <= 0)
+        if (health.currentHealth <= 0)
         {
             deglue();
             StartCoroutine(destroyAfterDelay(deathDelay));
@@ -88,7 +88,7 @@ abstract public class Enemy : MonoBehaviour
         {
             if (coll.gameObject.CompareTag("Player"))
             {
-                health.health -= damage;
+                health.currentHealth -= damage;
             }
             if (coll.gameObject.CompareTag("Enemy"))
             {
