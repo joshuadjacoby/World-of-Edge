@@ -10,6 +10,7 @@ public class EdgePickup : MonoBehaviour {
     public float maxSpeed;
     private float velocity;
     public float acceleration;
+    public float initialDelay;
 	void Start () {
         //the player will handle collisions with edges
         player = GameObject.FindGameObjectWithTag("Player");
@@ -18,13 +19,21 @@ public class EdgePickup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Vector3.Distance(transform.position,player.transform.position) < magDistance)
+        if(initialDelay > 0)
         {
-            move();
+            initialDelay -= Time.deltaTime;
         } else
         {
-            velocity = (velocity >= 0) ? velocity - acceleration * Time.deltaTime : 0;
+            if (Vector3.Distance(transform.position, player.transform.position) < magDistance)
+            {
+                move();
+            }
+            else
+            {
+                velocity = (velocity >= 0) ? velocity - acceleration * Time.deltaTime : 0;
+            }
         }
+		
 	}
     private void move()
     {

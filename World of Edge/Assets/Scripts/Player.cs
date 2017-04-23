@@ -44,7 +44,6 @@ public class Player : MonoBehaviour {
     }
     public IEnumerator flashPlayer(float duration)
     {
-        print("FLASH");
         float elapsedTime = 0f;
         while(elapsedTime < duration)
         {

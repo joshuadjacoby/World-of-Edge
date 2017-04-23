@@ -61,10 +61,11 @@ abstract public class Enemy : MonoBehaviour
         {
             GameObject edge = (GameObject)Instantiate(Resources.Load("Prefabs/Edge"));
             float rngAngle = Random.Range(0, 360);
-            float rngSpeed = Random.Range(0.5f, 3);
-            Vector3 rngVector = new Vector3(Mathf.Cos(rngAngle), 0, Mathf.Sin(rngAngle)) * rngSpeed;
-            edge.GetComponent<Rigidbody>().velocity = rngVector;
-            edge.transform.position = transform.position;
+            float rngSpeed = Random.Range(3, 10);
+            Vector3 rngVector = new Vector3(Mathf.Cos(rngAngle), 0, Mathf.Sin(rngAngle));
+            Debug.DrawRay(transform.position, rngVector, Color.green, 2f);
+            edge.GetComponent<Rigidbody>().velocity = rngVector*rngSpeed;
+            edge.transform.position = transform.position+rngVector;
             
         }
     }
