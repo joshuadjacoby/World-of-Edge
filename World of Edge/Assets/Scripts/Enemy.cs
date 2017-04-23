@@ -21,6 +21,7 @@ abstract public class Enemy : MonoBehaviour
     protected int damage;
     protected int enemyType;
     public float deathDelay;
+    public int edgesToSpawn;
     private float flashTimer;
 
     public void DoUpdate(float deltaTime)
@@ -40,7 +41,7 @@ abstract public class Enemy : MonoBehaviour
         {
             //deglue();
             //StartCoroutine(destroyAfterDelay(deathDelay));
-            edgeExplosion(20);
+            edgeExplosion(edgesToSpawn);
             Destroy(gameObject);
         }
     }
