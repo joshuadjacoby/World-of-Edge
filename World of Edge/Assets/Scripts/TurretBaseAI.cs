@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ShooterAI : Enemy {
+public class TurretBaseAI : Enemy {
 
     // Use this for initialization
     public float shootRadius;
