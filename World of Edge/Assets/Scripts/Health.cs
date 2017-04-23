@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     public float currentHealth, maxHealth;
-    public int healthBarWidth = 96;
+    public int healthBarWidth = 60;
     public int offset = 8;
-    public int healthBarHeight = 10;
+    public int healthBarHeight = 8;
     private Image healthBar;
     private Image backBar;
     private RectTransform canvas;
@@ -16,6 +16,8 @@ public class Health : MonoBehaviour
     private GameObject backGO, healthGO;
     private bool isInvuln;
     private const float INVULN_PERIOD = 1.5f;
+    public Color backColor = new Color(0.2f, 0.0f, 0.0f, 0.5f);
+    public Color innerColor = new Color(255f, 0.0f, 0.0f, 0.5f);
     private void Start()
     {
 
@@ -45,15 +47,15 @@ public class Health : MonoBehaviour
         screenPoint.x -= w / 2.0f;
         screenPoint.y -= h / 2.0f;
 
-        screenPoint.x -= 50f;
-        screenPoint.y += healthBarWidth / 2;
+        //screenPoint.x -= 50f;
+        screenPoint.x -= healthBarWidth / 2;
+        screenPoint.y += 25f;
 
         healthBar.rectTransform.anchoredPosition = screenPoint;
         backBar.rectTransform.anchoredPosition = screenPoint;
 
         curbw = Mathf.Lerp(curbw, currentHealth / maxHealth * 100.0f, Time.deltaTime * 8.0f);
-
-        healthBar.rectTransform.sizeDelta = new Vector2(curbw, healthBarHeight);
+        healthBar.rectTransform.sizeDelta = new Vector2(curbw/100*healthBarWidth, healthBarHeight);
 
 
 
@@ -87,11 +89,13 @@ public class Health : MonoBehaviour
         healthBar = healthGO.AddComponent<Image>();
         backBar = backGO.AddComponent<Image>();
 
-        healthBar.color = new Color(255f, 0.0f, 0.0f, 0.5f);
-        backBar.color = new Color(0.2f, 0.0f, 0.0f, 0.5f);
+        //healthBar.color = new Color(255f, 0.0f, 0.0f, 0.5f);
+        //backBar.color = new Color(0.2f, 0.0f, 0.0f, 0.5f);
+        healthBar.color = innerColor;
+        backBar.color = backColor;
 
-        healthBar.rectTransform.sizeDelta = new Vector2(100, healthBarHeight);
-        backBar.rectTransform.sizeDelta = new Vector2(100, healthBarHeight);
+        healthBar.rectTransform.sizeDelta = new Vector2(healthBarWidth, healthBarHeight);
+        backBar.rectTransform.sizeDelta = new Vector2(healthBarWidth, healthBarHeight);
 
         backBar.rectTransform.pivot = Vector2.zero;
         healthBar.rectTransform.pivot = Vector2.zero;
