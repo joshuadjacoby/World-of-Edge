@@ -13,22 +13,33 @@ abstract public class Enemy : MonoBehaviour
     }
 
     public Health health;
+    public MeshRenderer meshRenderer;
+    public float flashDuration = 0.15f;
+    public EnemyManager enemyManager;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
     protected int enemyType;
-    private const float PARTICLE_LIFETIME = 2f;
+    public float deathDelay;
+    private float flashTimer;
 
-    void Start()
+    public void DoUpdate(float deltaTime)
     {
-
-    }
-
-    void Update()
-    {
-        if (health.health <= 0)
+        if (flashTimer > 0)
         {
-            kill();
+            float colorDiff = 1 - flashTimer / flashDuration;
+            meshRenderer.material.SetColor("_Color", new Color(1, colorDiff, colorDiff));
+            flashTimer -= deltaTime;
+        }
+        else
+        {
+            meshRenderer.material.SetColor("_Color", Color.white);
+            flashTimer = 0;
+        }
+        if (health.currentHealth <= 0)
+        {
+            deglue();
+            StartCoroutine(destroyAfterDelay(deathDelay));
         }
     }
 
@@ -42,13 +53,7 @@ abstract public class Enemy : MonoBehaviour
     {
         AIActive = x;
     }
-
-    public void kill()
-    {
-        deglue();
-        destroyAfterDelay(PARTICLE_LIFETIME);
-    }
-
+    
     public IEnumerator destroyAfterDelay(float duration)
     {
         float elapsedTime = 0;
@@ -70,6 +75,12 @@ abstract public class Enemy : MonoBehaviour
 
     }
 
+    public void Flash()
+    {
+        meshRenderer.material.SetColor("_Color", Color.red);
+        flashTimer = flashDuration;
+    }
+
     void OnCollisionEnter(Collision coll)
     {
         Health health = coll.gameObject.GetComponent<Health>();
@@ -77,7 +88,7 @@ abstract public class Enemy : MonoBehaviour
         {
             if (coll.gameObject.CompareTag("Player"))
             {
-                health.health -= damage;
+                health.currentHealth -= damage;
             }
             if (coll.gameObject.CompareTag("Enemy"))
             {

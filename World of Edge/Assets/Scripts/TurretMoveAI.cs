@@ -9,23 +9,47 @@ public class TurretMoveAI : Enemy {
     private List<GameObject> enemyList;
     private GameObject targetEnemy;
     private TurretShootAI turretShootAI;
-	void Start () {
+    private Transform moveTowards;
+    void Start () {
         turretShootAI = GetComponentInChildren<TurretShootAI>();
         //turretShootAI.enabled = false;
         //When glued to something, activate turretShootAI
         player = GameObject.FindGameObjectWithTag("Player");
-        health.health = 100;
         damage = 10;
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = GameObject.Find("Shooter").transform.position;
-	}
+        foreach (TurretBaseAI turretBase in FindObjectsOfType<TurretBaseAI>())
+        {
+            if (moveTowards == null ||
+                Vector3.Distance(transform.position, turretBase.transform.position) < (Vector3.Distance(transform.position, moveTowards.position)))
+            {
+                moveTowards = turretBase.transform;
+            }
+        }
+        agent.destination = moveTowards.position;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        agent.destination = GameObject.Find("Shooter").transform.position;
-
+        if (moveTowards == null)
+        {
+            // NOTE : Copy-pasted from shooter finding code in the constructor
+            foreach (TurretBaseAI turretBase in FindObjectsOfType<TurretBaseAI>())
+            {
+                if (Vector3.Distance(transform.position, turretBase.transform.position) < (Vector3.Distance(transform.position, moveTowards.position)))
+                {
+                    moveTowards = turretBase.transform;
+                }
+            }
+            agent.destination = moveTowards.position;
+        }
+        else
+        {
+            agent.destination = moveTowards.position;
+        }
+        DoUpdate(Time.deltaTime);
     }
+
     private GameObject getNearestEnemy()
     {
         //still needs to blacklist runners

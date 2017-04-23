@@ -27,7 +27,18 @@ public class Bullet : MonoBehaviour
         Health health = collision.gameObject.GetComponent<Health>();
         if (health != null)
         {
-            health.health -= damage;
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.Flash();
+            }
+            Player player = collision.gameObject.GetComponent<Player>();
+            if(player != null)
+            {
+                player.flash();
+            }
+            health.currentHealth -= damage;
+
             Destroy(gameObject);
         }
     }
