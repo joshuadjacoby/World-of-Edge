@@ -53,11 +53,6 @@ public class EnemyManager : MonoBehaviour {
     IEnumerator spawnEnemies(int waveSize, float spawnInterval) {
         while (enemyList.Count < waveSize) {
             //set conditions for stopping spawner when player is dead
-            if (playerDead)
-            {
-                StopAllCoroutines();
-                break;
-            }
 
             int enemyIndex = GetRandomEnemyIndex(randomSelections);
             Vector3 position = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0);
@@ -97,6 +92,11 @@ public class EnemyManager : MonoBehaviour {
     public void playerIsDead(bool dead )
     {
         playerDead = dead;
+        StopAllCoroutines();
+        foreach (GameObject enemy in enemyList)
+        {
+            Destroy(enemy);
+        }
     }
 
 }
