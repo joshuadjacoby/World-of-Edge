@@ -19,6 +19,7 @@ public class Shooter : MonoBehaviour
     public float cooldown;
     public float damageMultiplier;
     public float bulletSpawnOffset;
+    public float spreadVariance;
 
     private float cooldownTimer;
     private Transform targetTransform;
@@ -87,16 +88,16 @@ public class Shooter : MonoBehaviour
         switch (bullet)
         {
             case (BulletType.normal):
-                fireBullet(shootDirection, (int)BulletType.normal, true, true);
+                fireBullet(shootDirection, (int)BulletType.normal, true);
                 break;
             case (BulletType.piercing):
-                fireBullet(shootDirection, (int)BulletType.piercing, false, false);
+                fireBullet(shootDirection, (int)BulletType.piercing, false);
                 break;
             case (BulletType.ricochet):
-                fireBullet(shootDirection, (int)BulletType.ricochet, true, true);
+                fireBullet(shootDirection, (int)BulletType.ricochet, true);
                 break;
             case (BulletType.explosive):
-                fireBullet(shootDirection, (int)BulletType.explosive, true, false);
+                fireBullet(shootDirection, (int)BulletType.explosive, false);
                 break;
             case (BulletType.spreadShot2):
                 multiFire(shootDirection, (int)BulletType.spreadShot2, 2, 10, true);
@@ -113,7 +114,7 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    public void fireBullet(Vector3 shootDirection, int type, bool bulletSpread = false, bool shapeOverride = false)
+    public void fireBullet(Vector3 shootDirection, int type, bool shapeOverride = false)
     {
         GameObject bulletObject = (GameObject)Instantiate(bulletPrefab[type]);
         if (shapeOverride)
@@ -130,8 +131,7 @@ public class Shooter : MonoBehaviour
         
         BulletParent bullet = bulletObject.GetComponent<BulletParent>();
         bullet.direction = shootDirection;
-        if (bulletSpread)
-            bullet.direction += new Vector3(Random.Range(0.0f, 0.2f), Random.Range(0.0f, 0.2f), 0.0f);
+        bullet.direction += new Vector3(Random.Range(0.0f, spreadVariance), Random.Range(0.0f, spreadVariance), 0.0f);
 
         bullet.transform.position = transform.position + bulletSpawnOffset * shootDirection;
 
@@ -146,7 +146,7 @@ public class Shooter : MonoBehaviour
             shootDirection = Quaternion.Euler(0, degreesBetweenBullets / 2 - (numBullets / 2 - 1) * degreesBetweenBullets, 0) * shootDirection;
             for (int i = 0; i < numBullets; i++)
             {
-                fireBullet(shootDirection, type, false, shapeOverride);
+                fireBullet(shootDirection, type, shapeOverride);
                 shootDirection = Quaternion.Euler(0, degreesBetweenBullets, 0) * shootDirection;
             }
         }
@@ -155,7 +155,7 @@ public class Shooter : MonoBehaviour
             shootDirection = Quaternion.Euler(0, -(numBullets / 2) * degreesBetweenBullets, 0) * shootDirection;
             for (int i = 0; i < numBullets; i++)
             {
-                fireBullet(shootDirection, type, false, shapeOverride);
+                fireBullet(shootDirection, type, shapeOverride);
                 shootDirection = Quaternion.Euler(0, degreesBetweenBullets, 0) * shootDirection;
             }
         }
