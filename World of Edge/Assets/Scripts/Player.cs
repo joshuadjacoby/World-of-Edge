@@ -8,13 +8,18 @@ public class Player : MonoBehaviour {
     private Health health;
     private int edgeCount;
     private int playerLevel;
-    private const int EDGES_PER_LEVEL = 10;
+    private const int TO_LVL_1 = 50;
+    private const int TO_LVL_2 = 100;
+    private const int TO_LVL_3 = 200;
+    private const int TO_LVL_4 = 300;
+    private int[] edgeReqs;
     private MeshRenderer playerRenderer;
     void Start () {
         //health = GetComponent<Health>();
         edgeCount = 0;
         playerLevel = 0;
         playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+        edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
 	}
 	
 	// Update is called once per frame
@@ -25,10 +30,20 @@ public class Player : MonoBehaviour {
     public void incrementEdgeCount()
     {
         edgeCount++;
-        if (edgeCount >= EDGES_PER_LEVEL)
+        if (edgeCount >= getEdgesToNextLevel())
         {
+            edgeCount = 0;
             playerLevel++;
+
         }
+    }
+    public int getEdgesToNextLevel()
+    {
+        if(playerLevel >= edgeReqs.Length)
+        {
+            return 500;
+        }
+        return edgeReqs[playerLevel];
     }
     public int getEdgeCount()
     {

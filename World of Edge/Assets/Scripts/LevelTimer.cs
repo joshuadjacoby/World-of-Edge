@@ -31,7 +31,7 @@ public class LevelTimer : MonoBehaviour {
     {
         string result = "";
         result += "" + time / 60 + ":";
-        result = (time % 60 > 10) ? result + time % 60 : result + "0" + time % 60;
+        result = (time % 60 >= 10) ? result + time % 60 : result + "0" + time % 60;
         return result; 
     }
 }
