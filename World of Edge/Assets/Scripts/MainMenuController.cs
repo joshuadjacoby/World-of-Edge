@@ -16,8 +16,8 @@ public class MainMenuController : MonoBehaviour {
     private const float REPEATDELAY = 0.15f;
     private IEnumerator creditsCoroutine;
     void Start () {
-		
-	}
+        UnityEngine.EventSystems.EventSystem.current.sendNavigationEvents = !UnityEngine.EventSystems.EventSystem.current.sendNavigationEvents;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,7 +29,6 @@ public class MainMenuController : MonoBehaviour {
     }
     public void creditsPress()
     {
-        eventSystem.SetSelectedGameObject(buttonList[3]);
         creditsRevealer.revealUI();
         creditsCoroutine = creditsReveal();
         StartCoroutine(creditsCoroutine);
@@ -40,7 +39,6 @@ public class MainMenuController : MonoBehaviour {
     }
     public void backPress()
     {
-        eventSystem.SetSelectedGameObject(buttonList[0]);
         creditsRevealer.hideUI();
         StopCoroutine(creditsCoroutine);
         for(int i = 0; i < nameList.Length; i++)
