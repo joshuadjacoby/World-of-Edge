@@ -9,12 +9,10 @@ public class BulletParent : MonoBehaviour {
     public Vector3 direction;
 
     // Update is called once per frame
-    void FixedUpdate () {
-        
-    }
     public void move()
     {
-        transform.position += direction * speed * Time.fixedDeltaTime;
+        GetComponent<Rigidbody>().velocity = direction * speed;
+        //transform.position += direction * speed * Time.fixedDeltaTime;
     }
     public void updateLifeTime()
     {

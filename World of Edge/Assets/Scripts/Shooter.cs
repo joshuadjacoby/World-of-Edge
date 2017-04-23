@@ -8,7 +8,8 @@ public class Shooter : MonoBehaviour
     public float cooldown;
     public float damageMultiplier;
     public float bulletSpawnOffset;
-
+    [Range(0.0F, 1.0F)]
+    public float bulletSpread;
     private float cooldownTimer;
     private Transform targetTransform;
 
@@ -58,9 +59,9 @@ public class Shooter : MonoBehaviour
                     shootDirection.y = 0;
                     shootDirection = shootDirection.normalized;
                     bullet.direction = shootDirection;
-                    bullet.direction += new Vector3(Random.Range(0.0f, 0.2f), Random.Range(0.0f, 0.2f), 0.0f);
+                    bullet.direction += new Vector3(Random.Range(0.0f, bulletSpread), Random.Range(0.0f, bulletSpread), 0.0f);
 
-                    bullet.transform.position = transform.position + bulletSpawnOffset * shootDirection;
+                    bullet.transform.position = transform.position + (bulletSpawnOffset * shootDirection);
 
                     bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
                     //bullet.GetComponent<Rigidbody>().AddTorque(new Vector3(0.0f, 2000.0f, 0.0f));
