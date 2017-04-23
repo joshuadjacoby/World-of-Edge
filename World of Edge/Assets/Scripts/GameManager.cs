@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
     }
     private bool playerIsDead()
     {
-        return playerHealth.health <= 0;
+        return playerHealth.currentHealth <= 0;
     }
     public void killPlayer()
     {
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
     }
     public void takeDamage(int damage)
     {
-        playerHealth.health -= damage;
+        playerHealth.currentHealth -= damage;
         if (playerIsDead() && !isDead)
         {
             //above statement makes this run only once
