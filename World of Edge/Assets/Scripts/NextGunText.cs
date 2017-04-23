@@ -15,6 +15,6 @@ public class NextGunText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = "NEXT:"+gunNameList[player.getNextGunType()];
+        //text.text = "NEXT:"+gunNameList[player.getNextGunType()];
 	}
 }

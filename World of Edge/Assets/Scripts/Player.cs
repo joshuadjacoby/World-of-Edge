@@ -17,7 +17,10 @@ public class Player : MonoBehaviour {
     private const int PIERCING = 1;
     private const int RICOCHET = 2;
     private const int EXPLOSIVE = 3;
-    private const int SPREAD = 4;
+    private const int SPREAD2 = 4;
+    private const int SPREAD3 = 5;
+    private const int SPREAD4 = 6;
+    private const int SPREAD5 = 7;
     private int[] edgeReqs;
     private int gun;
     private int nextGun;
@@ -29,21 +32,15 @@ public class Player : MonoBehaviour {
         playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
         edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
         gun = HIGH_VELOCITY;
-        while (true)
-        {
-            nextGun = (int)Random.Range(0, 4.9999f);
-            if (nextGun != gun)
-            {
-                break;
-            }
-        }
+        
+        nextGun = (int)Random.Range(1, 7.99999f);
+            
     }
 	
 	// Update is called once per frame
 	void Update () {
 
 	}
-
     public void incrementEdgeCount()
     {
         edgeCount++;
@@ -76,7 +73,7 @@ public class Player : MonoBehaviour {
         gun = nextGun;
         while (true)
         {
-            nextGun = (int)Random.Range(0, 4.9999f);
+            nextGun = (int)Random.Range(0, 7.9999f);
             if(nextGun != gun)
             {
                 break;
