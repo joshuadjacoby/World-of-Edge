@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     private GameObject player;
     private Health playerHealth;
     public GameObject[] fadeInObjects;
+    public Text edgeText;
     private bool isDead;
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -23,9 +24,9 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            playerHealth.currentHealth -= 10;
+        edgeText.text = "EDGE:"+player.GetComponent<Player>().getEdgeCount();
+        if (playerIsDead()){
+            killPlayer();
         }
 	}
     
