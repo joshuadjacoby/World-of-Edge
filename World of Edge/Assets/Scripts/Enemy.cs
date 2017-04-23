@@ -38,8 +38,10 @@ abstract public class Enemy : MonoBehaviour
         }
         if (health.currentHealth <= 0)
         {
-            deglue();
-            StartCoroutine(destroyAfterDelay(deathDelay));
+            //deglue();
+            //StartCoroutine(destroyAfterDelay(deathDelay));
+            edgeExplosion(20);
+            Destroy(gameObject);
         }
     }
 
@@ -53,7 +55,19 @@ abstract public class Enemy : MonoBehaviour
     {
         AIActive = x;
     }
-    
+    public void edgeExplosion(int numEdges)
+    {
+        for(int i = 0; i < numEdges; i++)
+        {
+            GameObject edge = (GameObject)Instantiate(Resources.Load("Prefabs/Edge"));
+            float rngAngle = Random.Range(0, 360);
+            float rngSpeed = Random.Range(0.5f, 3);
+            Vector3 rngVector = new Vector3(Mathf.Cos(rngAngle), 0, Mathf.Sin(rngAngle)) * rngSpeed;
+            edge.GetComponent<Rigidbody>().velocity = rngVector;
+            edge.transform.position = transform.position;
+            
+        }
+    }
     public IEnumerator destroyAfterDelay(float duration)
     {
         float elapsedTime = 0;
