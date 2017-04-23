@@ -41,7 +41,14 @@ public class Shooter : MonoBehaviour
                 {
                     cooldownTimer = cooldown;
 
+                    Object[] sprites;
+                    sprites = Resources.LoadAll("Projectiles");
+
                     GameObject bulletObject = Instantiate(bulletPrefab);
+
+                    int bulletSpriteIndex = Random.Range(1, sprites.Length);
+
+                    bulletObject.GetComponentInChildren<SpriteRenderer>().sprite = (Sprite)sprites[bulletSpriteIndex];
 
                     BulletParent bullet = bulletObject.GetComponent<BulletParent>();
 
@@ -51,12 +58,12 @@ public class Shooter : MonoBehaviour
                     shootDirection.y = 0;
                     shootDirection = shootDirection.normalized;
                     bullet.direction = shootDirection;
-
+                    bullet.direction += new Vector3(Random.Range(0.0f, 0.2f), Random.Range(0.0f, 0.2f), 0.0f);
 
                     bullet.transform.position = transform.position + bulletSpawnOffset * shootDirection;
 
                     bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
-
+                    //bullet.GetComponent<Rigidbody>().AddTorque(new Vector3(0.0f, 2000.0f, 0.0f));
                     bullet.damage *= damageMultiplier;
                 }
             }

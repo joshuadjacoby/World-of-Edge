@@ -47,11 +47,11 @@ public class GameManager : MonoBehaviour {
     {
         player.SetActive(false);
 
+        // stops all enemy spawners from spawning stuff when player is dead
         for (int i = 0; i < enemyManagers.Length; i++)
         {
             enemyManagers[i].playerIsDead(true);
         }
-
 
         if (!isDead)
         {
