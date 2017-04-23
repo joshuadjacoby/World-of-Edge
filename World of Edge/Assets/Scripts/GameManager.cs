@@ -6,14 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     // Use this for initialization
-    private int edgeCount;
     public Sprite[] playerSprites;
     private GameObject player;
     private Health playerHealth;
     public GameObject[] fadeInObjects;
-    private int playerLevel;
     private bool isDead;
-    private const int EDGES_PER_LEVEL = 10;
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
@@ -22,31 +19,19 @@ public class GameManager : MonoBehaviour {
         {
             fadeInObjects[i].SetActive(false);
         }
-        playerLevel = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            takeDamage(10);
+            playerHealth.currentHealth -= 10;
         }
 	}
-    public void incrementEdgeCount()
-    {
-        edgeCount++;
-        if(edgeCount >= EDGES_PER_LEVEL)
-        {
-            playerLevel++;
-        }
-    }
-    public int getEdgeCount()
-    {
-        return edgeCount;
-    }
+    
     public Sprite getPlayerSprite()
     {
-        return playerSprites[playerLevel];
+        return playerSprites[player.GetComponent<Player>().getLevel()];
     }
     private bool playerIsDead()
     {
@@ -55,20 +40,16 @@ public class GameManager : MonoBehaviour {
     public void killPlayer()
     {
         player.SetActive(false);
-        StartCoroutine(gameOverScreen());
-    }
-    public void takeDamage(int damage)
-    {
-        playerHealth.currentHealth -= damage;
-        if (playerIsDead() && !isDead)
+
+        if (!isDead)
         {
-            //above statement makes this run only once
-            //Only when the player transitions from not-dead to dead
-            killPlayer();
+            StartCoroutine(gameOverScreen());
         }
     }
+    
     public IEnumerator gameOverScreen()
     {
+        isDead = true;
         Color[] originalColor = new Color[fadeInObjects.Length];
         for(int i = 0; i < fadeInObjects.Length; i++)
         {

@@ -32,6 +32,7 @@ public class Bullet : MonoBehaviour
             {
                 enemy.Flash();
             }
+            
             health.currentHealth -= damage;
 
             Destroy(gameObject);
