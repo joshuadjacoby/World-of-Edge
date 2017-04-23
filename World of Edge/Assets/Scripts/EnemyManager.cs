@@ -58,6 +58,7 @@ public class EnemyManager : MonoBehaviour {
             //StartCoroutine(waitAnimation(spawnDelay, position));
 
             GameObject toAdd = Instantiate(enemyPrefabs[enemyIndex], position, Quaternion.identity);
+            toAdd.transform.position = transform.position;
             toAdd.GetComponent<Enemy>().enemyManager = this;
             enemyList.Add(toAdd);
 
