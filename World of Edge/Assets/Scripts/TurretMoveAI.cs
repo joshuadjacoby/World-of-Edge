@@ -39,13 +39,16 @@ public class TurretMoveAI : Enemy {
         if (moveTowards == null)
         {
             // NOTE : Copy-pasted from shooter finding code in the constructor
+
+
             foreach (TurretBaseAI turretBase in FindObjectsOfType<TurretBaseAI>())
             {
+                if (moveTowards == null)
+                    moveTowards = turretBase.transform;
                 if (Vector3.Distance(transform.position, turretBase.transform.position) < (Vector3.Distance(transform.position, moveTowards.position)))
                 {
                     moveTowards = turretBase.transform;
                 }
-
             }
 
             if (moveTowards != null)
