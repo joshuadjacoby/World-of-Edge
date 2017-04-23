@@ -29,6 +29,7 @@ public class RunnerAI : Enemy {
         if (playerObj != null)
         {
             coll.gameObject.GetComponent<Health>().takeDamage(DAMAGE);
+            Destroy(gameObject);
         }
     }
 

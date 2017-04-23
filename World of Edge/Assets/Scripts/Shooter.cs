@@ -7,6 +7,7 @@ public class Shooter : MonoBehaviour
     public GameObject bulletPrefab;
     public float cooldown;
     public float damageMultiplier;
+    public float bulletSpawnOffset;
 
     private float cooldownTimer;
     private Transform targetTransform;
@@ -44,14 +45,15 @@ public class Shooter : MonoBehaviour
 
                     Bullet bullet = bulletObject.GetComponent<Bullet>();
 
-                    bullet.transform.position = transform.position;
-
                     Vector3 shootDirection = Input.mousePosition;
                     shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
                     shootDirection = shootDirection - transform.position;
                     shootDirection.y = 0;
                     shootDirection = shootDirection.normalized;
                     bullet.direction = shootDirection;
+
+
+                    bullet.transform.position = transform.position + bulletSpawnOffset * shootDirection;
 
                     bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
 
