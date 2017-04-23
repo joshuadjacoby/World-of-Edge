@@ -43,7 +43,7 @@ public class Shooter : MonoBehaviour
 
                     GameObject bulletObject = Instantiate(bulletPrefab);
 
-                    Bullet bullet = bulletObject.GetComponent<Bullet>();
+                    BulletParent bullet = bulletObject.GetComponent<BulletParent>();
 
                     Vector3 shootDirection = Input.mousePosition;
                     shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
