@@ -11,10 +11,12 @@ public class EdgePickup : MonoBehaviour {
     private float velocity;
     public float acceleration;
     public float initialDelay;
+    public float lifeTime;
 	void Start () {
         //the player will handle collisions with edges
         player = GameObject.FindGameObjectWithTag("Player");
         velocity = 0;
+        StartCoroutine(deleteAfterSeconds(lifeTime+Random.Range(-.5f,0.5f)));
 	}
 	
 	// Update is called once per frame
@@ -39,5 +41,15 @@ public class EdgePickup : MonoBehaviour {
     {
         velocity = (velocity < maxSpeed) ? velocity + acceleration * Time.deltaTime : maxSpeed;
         transform.position += (player.transform.position - transform.position).normalized * velocity * Time.deltaTime;
+    }
+    public IEnumerator deleteAfterSeconds(float seconds)
+    {
+
+        while(seconds > 0)
+        {
+            seconds -= Time.deltaTime;
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 }

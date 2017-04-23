@@ -5,6 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     // Use this for initialization
+    private enum gunTypes
+    {
+        gun0,
+        gun1,
+        gun2,
+        gun3,
+        gun4
+    }
     private Health health;
     private int edgeCount;
     private int playerLevel;
@@ -13,6 +21,7 @@ public class Player : MonoBehaviour {
     private const int TO_LVL_3 = 200;
     private const int TO_LVL_4 = 300;
     private int[] edgeReqs;
+    private int gunType;
     private MeshRenderer playerRenderer;
     void Start () {
         //health = GetComponent<Health>();
@@ -20,6 +29,7 @@ public class Player : MonoBehaviour {
         playerLevel = 0;
         playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
         edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
+        gunType = (int)gunTypes.gun0;
 	}
 	
 	// Update is called once per frame
@@ -34,8 +44,9 @@ public class Player : MonoBehaviour {
         {
             edgeCount = 0;
             playerLevel++;
-
+            getNewGun();
         }
+
     }
     public int getEdgesToNextLevel()
     {
@@ -44,6 +55,14 @@ public class Player : MonoBehaviour {
             return 500;
         }
         return edgeReqs[playerLevel];
+    }
+    public int getGunType()
+    {
+        return gunType;
+    }
+    private void getNewGun()
+    {
+        //to be implemented
     }
     public int getEdgeCount()
     {
