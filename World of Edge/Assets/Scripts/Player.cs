@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     // Use this for initialization
-    
+    public RuntimeAnimatorController[] animationControllers; 
+
+
     private Health health;
     private int edgeCount;
     private int playerLevel;
@@ -21,12 +23,12 @@ public class Player : MonoBehaviour {
     private int[] edgeReqs;
     private int gun;
     private int nextGun;
-    private MeshRenderer playerRenderer;
+    private SpriteRenderer playerRenderer;
     void Start () {
         //health = GetComponent<Health>();
         edgeCount = 0;
         playerLevel = 0;
-        playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+        playerRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
         edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
         gun = HIGH_VELOCITY;
         while (true)
@@ -37,10 +39,14 @@ public class Player : MonoBehaviour {
                 break;
             }
         }
+        GetComponentInChildren<Animator>().runtimeAnimatorController = animationControllers[playerLevel];
+
+        //animationControllers = Resources.LoadAll<RuntimeAnimatorController>("Animations");
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
 	}
 
@@ -51,6 +57,7 @@ public class Player : MonoBehaviour {
         {
             edgeCount = 0;
             playerLevel++;
+            GetComponentInChildren<Animator>().runtimeAnimatorController = animationControllers[playerLevel];
             getNewGun();
         }
 
