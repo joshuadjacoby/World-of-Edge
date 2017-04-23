@@ -34,7 +34,8 @@ public class Bullet : MonoBehaviour
             }
             health.takeDamage((int)damage);
             Destroy(gameObject);
-        } else
+        }
+        else
         {
             if (collision.gameObject.tag == "Wall")
             {
