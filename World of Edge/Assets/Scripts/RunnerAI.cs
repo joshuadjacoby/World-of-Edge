@@ -20,6 +20,7 @@ public class RunnerAI : Enemy {
 	// Update is called once per frame
 	void Update () {
         agent.destination = player.transform.position;
+        DoUpdate(Time.deltaTime);
     }
 
     

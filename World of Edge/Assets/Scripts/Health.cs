@@ -70,11 +70,17 @@ public class Health : MonoBehaviour
     private void Update()
     {
         setBars();
-        if (currentHealth <= 0)
-        {
-            Destroy(healthBar);
-            Destroy(backBar);
-        }
+        //if (currentHealth <= 0)
+        //{
+        //    Destroy(healthBar);
+        //    Destroy(backBar);
+        //}
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(healthBar);
+        Destroy(backBar);
     }
 
 
