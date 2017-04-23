@@ -32,9 +32,20 @@ public class Bullet : MonoBehaviour
             {
                 enemy.Flash();
             }
+            Player player = collision.gameObject.GetComponent<Player>();
+            if(player != null)
+            {
+                player.flash();
+            }
             health.currentHealth -= damage;
 
             Destroy(gameObject);
+        } else
+        {
+            if (collision.gameObject.tag == "Wall")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

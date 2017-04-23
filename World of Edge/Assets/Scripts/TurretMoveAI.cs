@@ -9,6 +9,7 @@ public class TurretMoveAI : Enemy {
     private List<GameObject> enemyList;
     private GameObject targetEnemy;
     private TurretShootAI turretShootAI;
+    private Transform moveTowards;
     void Start () {
         turretShootAI = GetComponentInChildren<TurretShootAI>();
         //turretShootAI.enabled = false;
@@ -17,18 +18,45 @@ public class TurretMoveAI : Enemy {
         damage = 10;
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();
+        foreach (TurretBaseAI turretBase in FindObjectsOfType<TurretBaseAI>())
+        {
+            if (moveTowards == null ||
+                Vector3.Distance(transform.position, turretBase.transform.position) < (Vector3.Distance(transform.position, moveTowards.position)))
+            {
+                moveTowards = turretBase.transform;
+            }
+        }
+        if (moveTowards != null)
+        {
+            //if there isn't a turret base spawned yet.
+            agent.destination = moveTowards.position;
+
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        ShooterAI shooter = FindObjectOfType<ShooterAI>();
-        if (shooter != null)
+        if (moveTowards == null)
         {
-            agent.destination = shooter.transform.position;
+            // NOTE : Copy-pasted from shooter finding code in the constructor
+            foreach (TurretBaseAI turretBase in FindObjectsOfType<TurretBaseAI>())
+            {
+                if (Vector3.Distance(transform.position, turretBase.transform.position) < (Vector3.Distance(transform.position, moveTowards.position)))
+                {
+                    moveTowards = turretBase.transform;
+                }
+
+            }
+
+            if (moveTowards != null)
+            {
+                agent.destination = moveTowards.position;
+            }
+
         }
         else
         {
-            agent.destination = transform.position;
+            agent.destination = moveTowards.position;
         }
         DoUpdate(Time.deltaTime);
     }
