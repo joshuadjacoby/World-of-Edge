@@ -8,35 +8,61 @@ public class GlueTestScript : MonoBehaviour {
     GameObject[] targetList;
     // Use this for initialization
     void Start () {
-        targetList = GameObject.FindGameObjectsWithTag("Enemy");
-        target = targetList[0].gameObject == gameObject ? targetList[1] : targetList[0];
+        changeTargets();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (transform.parent == null)
+	void FixedUpdate () {
+		if (transform.parent == null && targetList.Length != 1)
         {
-            transform.position =Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 5.0f);
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * 5.0f);
         }
 	}
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.parent== null && collision.transform.tag == "Enemy")
+        if (collision.transform.parent == null)
         {
-            collision.transform.parent= transform;
+            if (collision.transform.childCount > 0)
+            {
+                //unNestChildren(collision.transform);
+            }
+            collision.transform.parent = transform;
             collision.gameObject.tag = "EnemyComponent";
             if (collision.gameObject == target)
             {
                 changeTargets();
             }
         }
+    }
 
+    private void unNestChildren(Transform t)
+    {
+        foreach (Transform child in t)
+        {
+            if (child.childCount > 0)
+            {
+                unNestChildren(child);
+            }
+            child.parent = transform;
+            child.gameObject.tag = "EnemyComponent";
+            if (child.gameObject == target)
+            {
+                changeTargets();
+            }
+        }
     }
 
     private void changeTargets()
     {
         targetList = GameObject.FindGameObjectsWithTag("Enemy");
-        target = targetList[0].gameObject == gameObject ? targetList[1] : targetList[0];
+        if (targetList.Length == 1)
+        {
+            return;
+        }
+        do
+        {
+            target = targetList[Random.Range(0, targetList.Length)];
+        } while (target == gameObject);
     }
 }
