@@ -26,7 +26,12 @@ public class TurretMoveAI : Enemy {
                 moveTowards = turretBase.transform;
             }
         }
-        agent.destination = moveTowards.position;
+        if (moveTowards != null)
+        {
+            //if there isn't a turret base spawned yet.
+            agent.destination = moveTowards.position;
+
+        }
     }
 	
 	// Update is called once per frame
@@ -40,8 +45,14 @@ public class TurretMoveAI : Enemy {
                 {
                     moveTowards = turretBase.transform;
                 }
+
             }
-            agent.destination = moveTowards.position;
+
+            if (moveTowards != null)
+            {
+                agent.destination = moveTowards.position;
+            }
+
         }
         else
         {

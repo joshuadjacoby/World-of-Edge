@@ -40,6 +40,12 @@ public class Bullet : MonoBehaviour
             health.currentHealth -= damage;
 
             Destroy(gameObject);
+        } else
+        {
+            if (collision.gameObject.tag == "Wall")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
