@@ -10,17 +10,24 @@ public class BulletParent : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate () {
+        
+    }
+    public void move()
+    {
+        transform.position += direction * speed * Time.fixedDeltaTime;
+    }
+    public void updateLifeTime()
+    {
         if (lifeTimer <= 0)
         {
             Destroy(gameObject);
         }
         else
         {
-            transform.position += direction * speed * Time.fixedDeltaTime;
+
             lifeTimer -= Time.fixedDeltaTime;
         }
     }
-
     void OnCollisionEnter(Collision collision)
     {
         Health health = collision.gameObject.GetComponent<Health>();
