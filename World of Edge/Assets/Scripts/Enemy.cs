@@ -14,14 +14,14 @@ abstract public class Enemy : MonoBehaviour
 
     public Health health;
     public MeshRenderer meshRenderer;
-    public float flashDuration;
+    public float flashDuration = 0.15f;
     public EnemyManager enemyManager;
     private bool AIActive = true;
     protected GameObject player;
     protected int damage;
     protected int enemyType;
     public float deathDelay;
-    private float flashTimer = 0.15f;
+    private float flashTimer;
 
     public void DoUpdate(float deltaTime)
     {

@@ -46,6 +46,5 @@ public class PlayerMovement : MonoBehaviour
         {
             navMeshAgent.velocity = navMeshAgent.velocity.normalized * maxMoveSpeed;
         }
-        transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 }

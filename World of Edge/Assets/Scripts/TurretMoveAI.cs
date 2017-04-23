@@ -17,7 +17,6 @@ public class TurretMoveAI : Enemy {
         damage = 10;
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = GameObject.Find("Shooter").transform.position;
     }
 	
 	// Update is called once per frame
@@ -26,6 +25,10 @@ public class TurretMoveAI : Enemy {
         if (shooter != null)
         {
             agent.destination = shooter.transform.position;
+        }
+        else
+        {
+            agent.destination = transform.position;
         }
         DoUpdate(Time.deltaTime);
     }
