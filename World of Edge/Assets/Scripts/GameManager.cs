@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
     public GameObject[] fadeInObjects;
     public Text edgeText;
     private bool isDead;
+    private EnemyManager[] enemyManagers;
+
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
@@ -20,6 +22,9 @@ public class GameManager : MonoBehaviour {
         {
             fadeInObjects[i].SetActive(false);
         }
+
+        enemyManagers = FindObjectsOfType<EnemyManager>();
+
 	}
 	
 	// Update is called once per frame
@@ -41,6 +46,12 @@ public class GameManager : MonoBehaviour {
     public void killPlayer()
     {
         player.SetActive(false);
+
+        for (int i = 0; i < enemyManagers.Length; i++)
+        {
+            enemyManagers[i].playerIsDead(true);
+        }
+
 
         if (!isDead)
         {

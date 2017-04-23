@@ -36,6 +36,7 @@ public class EnemyManager : MonoBehaviour {
     //object with animation to run
     public GameObject spawnAnimation;
     RandomSelection[] randomSelections;
+    private bool playerDead;
 
     void Start() {
         //Stores probability weights for usage with getRandomEnemyIndex();
@@ -52,6 +53,12 @@ public class EnemyManager : MonoBehaviour {
     IEnumerator spawnEnemies(int waveSize, float spawnInterval) {
         while (enemyList.Count < waveSize) {
             //set conditions for stopping spawner when player is dead
+            if (playerDead)
+            {
+                StopAllCoroutines();
+                break;
+            }
+
             int enemyIndex = GetRandomEnemyIndex(randomSelections);
             Vector3 position = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0);
             //instantiate animation at position with SpawnDelay using coroutine
@@ -85,6 +92,11 @@ public class EnemyManager : MonoBehaviour {
         //will happen if the input's probabilities sums to less than 1
         //throw error here if that's appropriate
         return -1;
+    }
+
+    public void playerIsDead(bool dead )
+    {
+        playerDead = dead;
     }
 
 }
