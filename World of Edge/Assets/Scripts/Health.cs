@@ -14,6 +14,8 @@ public class Health : MonoBehaviour
     private RectTransform canvas;
     private bool hpBarCreated = false;
     private GameObject backGO, healthGO;
+    private bool isInvuln;
+    private const float INVULN_PERIOD = 1.5f;
     private void Start()
     {
 
@@ -23,6 +25,7 @@ public class Health : MonoBehaviour
             spawnHPBar();
             hpBarCreated = true;
         }
+        isInvuln = false;
 
     }
 
@@ -100,6 +103,37 @@ public class Health : MonoBehaviour
         Destroy(healthBar);
         Destroy(backBar);
     }
-
+    public void takeDamage(int damage)
+    {
+        if (!getInvuln())
+        {
+            currentHealth -= damage;
+            if(gameObject.GetComponent<Player>() != null)
+            {
+                setInvulnPeriod(INVULN_PERIOD);
+                gameObject.GetComponent<Player>().flashInvuln(INVULN_PERIOD);
+            }
+        }
+        
+        
+    }
+    public void setInvuln(bool x)
+    {
+        isInvuln = x;
+    }
+    public bool getInvuln()
+    {
+        return isInvuln;
+    }
+    public void setInvulnPeriod(float duration)
+    {
+        StartCoroutine(invulnPeriod(duration));
+    }
+    public IEnumerator invulnPeriod(float duration)
+    {
+        setInvuln(true);
+        yield return new WaitForSeconds(duration);
+        setInvuln(false);
+    }
 
 }

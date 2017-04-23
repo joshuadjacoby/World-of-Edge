@@ -72,6 +72,7 @@ public class Player : MonoBehaviour {
     {
         return playerLevel;
     }
+    /*
     public void flash()
     {
         StartCoroutine(flashPlayer(0.7f));
@@ -86,6 +87,29 @@ public class Player : MonoBehaviour {
             yield return null;
         }
         
+    }
+    */
+    public void flashInvuln(float duration)
+    {
+        StartCoroutine(flashPlayerInvuln(duration));
+    }
+    public IEnumerator flashPlayerInvuln(float duration)
+    {
+        float flashSpeed = 0.1f;
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            if(elapsedTime % (flashSpeed*2) > flashSpeed)
+            {
+                playerRenderer.enabled = false;
+            } else
+            {
+                playerRenderer.enabled = true;
+            }
+            yield return null;
+        }
+        playerRenderer.enabled = true;
     }
     void OnCollisionEnter(Collision coll)
     {

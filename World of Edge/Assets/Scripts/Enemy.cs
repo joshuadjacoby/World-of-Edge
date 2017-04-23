@@ -103,7 +103,7 @@ abstract public class Enemy : MonoBehaviour
         {
             if (coll.gameObject.CompareTag("Player"))
             {
-                health.currentHealth -= damage;
+                health.takeDamage(damage);
             }
             if (coll.gameObject.CompareTag("Enemy"))
             {

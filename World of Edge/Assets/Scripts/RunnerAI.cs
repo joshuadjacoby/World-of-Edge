@@ -23,6 +23,13 @@ public class RunnerAI : Enemy {
         DoUpdate(Time.deltaTime);
     }
 
-    
+    void OnCollisionEnter(Collision coll)
+    {
+        Player playerObj = coll.gameObject.GetComponent<Player>();
+        if (playerObj != null)
+        {
+            coll.gameObject.GetComponent<Health>().takeDamage(DAMAGE);
+        }
+    }
 
 }
