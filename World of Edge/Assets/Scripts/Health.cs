@@ -11,29 +11,18 @@ public class Health : MonoBehaviour
     public int healthBarHeight = 10;
     private Image healthBar;
     private Image backBar;
-    private RectTransform canvas; 
-
+    private RectTransform canvas;
+    private bool hpBarCreated = false;
+    private GameObject backGO, healthGO;
     private void Start()
     {
 
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
-
-        GameObject backGO = new GameObject("healthbarback");
-        backGO.transform.parent = canvas.Find("HealthBars").transform;
-        GameObject healthGO = new GameObject("healthbar");
-        healthGO.transform.parent = canvas.Find("HealthBars").transform;
-
-        healthBar = healthGO.AddComponent<Image>();
-        backBar = backGO.AddComponent<Image>();
-
-        healthBar.color = Color.red;
-        backBar.color = new Color(0.2f, 0.0f, 0.0f);
-
-        healthBar.rectTransform.sizeDelta = new Vector2(100, healthBarHeight);
-        backBar.rectTransform.sizeDelta = new Vector2(100, healthBarHeight);
-
-        backBar.rectTransform.pivot = Vector2.zero;
-        healthBar.rectTransform.pivot = Vector2.zero;
+        if (gameObject.tag == "Player")
+        {
+            spawnHPBar();
+            hpBarCreated = true;
+        }
 
     }
 
@@ -44,7 +33,6 @@ public class Health : MonoBehaviour
         {
             return;
         }
-
         Vector3 sptd = Camera.main.WorldToViewportPoint(transform.position);
         Vector2 screenPoint = new Vector2(sptd.x, sptd.y);
         float h = Camera.main.pixelHeight;
@@ -65,17 +53,47 @@ public class Health : MonoBehaviour
         healthBar.rectTransform.sizeDelta = new Vector2(curbw, healthBarHeight);
 
 
+
     }
 
     private void Update()
     {
-        setBars();
+        if (!hpBarCreated && currentHealth < maxHealth)
+        {
+            spawnHPBar();
+            hpBarCreated = true;
+        }
+        else if (hpBarCreated)
+        {
+            setBars();
+        }
         //if (currentHealth <= 0)
         //{
         //    Destroy(healthBar);
         //    Destroy(backBar);
         //}
     }
+
+    private void spawnHPBar()
+    {
+        backGO = new GameObject("healthbarback");
+        backGO.transform.parent = canvas.Find("HealthBars").transform;
+        healthGO = new GameObject("healthbar");
+        healthGO.transform.parent = canvas.Find("HealthBars").transform;
+
+        healthBar = healthGO.AddComponent<Image>();
+        backBar = backGO.AddComponent<Image>();
+
+        healthBar.color = new Color(255f, 0.0f, 0.0f, 0.5f);
+        backBar.color = new Color(0.2f, 0.0f, 0.0f, 0.5f);
+
+        healthBar.rectTransform.sizeDelta = new Vector2(100, healthBarHeight);
+        backBar.rectTransform.sizeDelta = new Vector2(100, healthBarHeight);
+
+        backBar.rectTransform.pivot = Vector2.zero;
+        healthBar.rectTransform.pivot = Vector2.zero;
+    }
+
 
     private void OnDestroy()
     {
