@@ -16,9 +16,9 @@ abstract public class Enemy : MonoBehaviour
     public MeshRenderer meshRenderer;
     public float flashDuration = 0.15f;
     public EnemyManager enemyManager;
+    public int collisionDamage;
     private bool AIActive = true;
     protected GameObject player;
-    protected int damage;
     protected int enemyType;
     public float deathDelay;
     public int edgesToSpawn;
@@ -104,7 +104,8 @@ abstract public class Enemy : MonoBehaviour
         {
             if (coll.gameObject.CompareTag("Player"))
             {
-                health.takeDamage(damage);
+                health.takeDamage(collisionDamage);
+                Destroy(gameObject);
             }
             if (coll.gameObject.CompareTag("Enemy"))
             {

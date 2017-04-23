@@ -21,7 +21,6 @@ public class TurretBaseAI : Enemy {
         playerCollider = player.GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = player.transform.position;
-        damage = 10;
         LOS = false;
         fireTimer = 0;
         StartCoroutine(LOSLoop());
