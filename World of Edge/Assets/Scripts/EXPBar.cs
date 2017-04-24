@@ -21,6 +21,6 @@ public class EXPBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         expBarInside.anchorMax = new Vector2(player.GetNextLevelProgress(), 1);
-        weaponText.text = stringBeforeGunName + weaponNames[player.playerLevel];
+        weaponText.text = stringBeforeGunName + player.GetNextWeaponName();
 	}
 }
