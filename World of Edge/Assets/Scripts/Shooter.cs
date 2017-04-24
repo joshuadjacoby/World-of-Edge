@@ -9,6 +9,7 @@ public enum ShootType
 
 public class Shooter : MonoBehaviour
 {
+    public Transform avatarTransform;
     public KeyCode shootKey;
     public bool playerControlled;
     public GameObject[] bulletPrefab;
@@ -20,6 +21,7 @@ public class Shooter : MonoBehaviour
     public ShootType howToShotBullet;
     public int numBullets = 1;
     public float degreesBetweenBullets = 10f;
+    public AudioSource shootSound;
 
     private float cooldownTimer;
     private Transform targetTransform;
@@ -50,6 +52,10 @@ public class Shooter : MonoBehaviour
                 }
                 else
                 {
+                    if (shootSound != null)
+                    {
+                        shootSound.Play();
+                    }
                     cooldownTimer = cooldown;
                     Vector3 mousePosition = Input.mousePosition;
                     mousePosition.z = Camera.main.transform.position.y - transform.position.y;
@@ -65,7 +71,9 @@ public class Shooter : MonoBehaviour
         }
         else
         {
-            transform.rotation = Quaternion.LookRotation(transform.position - targetTransform.position, Vector3.up);
+            Vector3 shootDirection = targetTransform.position - transform.position;
+            shootDirection = shootDirection.normalized;
+            avatarTransform.LookAt(shootDirection, Vector3.up);
 
             if (cooldownTimer > 0)
             {
@@ -74,10 +82,7 @@ public class Shooter : MonoBehaviour
             else
             {
                 cooldownTimer = cooldown;
-                Vector3 shootDirection = targetTransform.position - transform.position;
-                shootDirection = shootDirection.normalized;
                 fireBullet(shootDirection, 0);
-
             }
         }
     }

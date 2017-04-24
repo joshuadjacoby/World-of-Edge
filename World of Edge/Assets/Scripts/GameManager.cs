@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour {
     public Text edgeText;
     private bool isDead;
     private EnemyManager[] enemyManagers;
+    public AudioSource gameOverSound;
 
     private void Awake()
     {
         Object.DontDestroyOnLoad(gameObject);
-        GetComponent<AudioSource>().Play();
     }
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour {
     
     public IEnumerator gameOverScreen()
     {
-        endMusicAndPlayGameOver();
+        gameOverSound.Play();
         isDead = true;
         Color[] originalColor = new Color[fadeInObjects.Length];
         for(int i = 0; i < fadeInObjects.Length; i++)
@@ -95,23 +95,10 @@ public class GameManager : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.R))
             {
                 GetComponent<AudioSource>().Stop();
-                GameObject.Find("SoundManager").GetComponent<AudioSource>().Stop();
                 SceneManager.LoadScene("Main");
                 break;
             }
             yield return null;
         }
     }
-
-    void endMusicAndPlayGameOver()
-    {
-        // End music
-        GetComponent<AudioSource>().Stop();
-
-        // Play game over music
-        AudioClip clip = (AudioClip)Resources.Load("Sounds/Game Over");
-        GameObject.Find("SoundManager").GetComponent<AudioSource>().PlayOneShot(clip);
-    }
-
-
 }

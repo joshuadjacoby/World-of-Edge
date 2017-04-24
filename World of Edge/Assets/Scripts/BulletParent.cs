@@ -36,7 +36,7 @@ public class BulletParent : MonoBehaviour {
             {
                 enemy.Flash();
             }
-            health.takeDamage((int)damage);
+            health.takeDamage(damage);
             Destroy(gameObject);
         }
         else

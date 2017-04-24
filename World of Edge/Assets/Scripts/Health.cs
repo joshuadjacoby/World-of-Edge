@@ -107,7 +107,7 @@ public class Health : MonoBehaviour
         Destroy(healthBar);
         Destroy(backBar);
     }
-    public void takeDamage(int damage)
+    public void takeDamage(float damage)
     {
         if (!getInvuln())
         {

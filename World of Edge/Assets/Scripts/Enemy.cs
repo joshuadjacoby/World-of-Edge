@@ -72,7 +72,7 @@ abstract public class Enemy : MonoBehaviour
             float rngSpeed = Random.Range(3, 10);
             Vector3 rngVector = new Vector3(Mathf.Cos(rngAngle), 0, Mathf.Sin(rngAngle));
             Debug.DrawRay(transform.position, rngVector, Color.green, 2f);
-            GameObject edge = Instantiate(edgePrefab);
+            GameObject edge = Instantiate(edgePrefab) as GameObject;
             edge.GetComponent<Rigidbody>().velocity = rngVector*rngSpeed;
             edge.transform.position = transform.position+rngVector;
             
