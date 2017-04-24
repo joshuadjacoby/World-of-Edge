@@ -8,12 +8,15 @@ public class Player : MonoBehaviour
 
     // Use this for initialization
 
+    public KeyCode switchWeapon;
     public Health health;
     public Shooter[] shooters;
     public int edgeCount = 0;
     public int playerLevel = 0;
+    public int equippedWeaponIndex = 0;
     public int[] edgesRequiredForLevels = { 50, 100, 200, 300 };
     public string[] animations = { "Square", "Pentagon", "Hexagon", "Septagon" };
+    public string[] weaponNames = { "Rapid Fire", "Shotgun", "Cow", "Sine Gun", "Super Ricochet" };
     public SpriteRenderer spriteRenderer;
     public Animator animator;
 
@@ -38,20 +41,28 @@ public class Player : MonoBehaviour
             {
                 edgeCount = 0;
 
-                if (playerLevel < shooters.Length)
+                foreach (Shooter shooter in shooters)
                 {
-                    shooters[playerLevel].enabled = false;
+                    shooter.enabled = false;
                 }
 
                 ++playerLevel;
+                equippedWeaponIndex = playerLevel;
+                health.currentHealth = health.maxHealth;
 
-                if (playerLevel < shooters.Length)
+                foreach (Shooter shooter in shooters)
                 {
-                    shooters[playerLevel].enabled = true;
+                    shooter.damageMultiplier = 1 + playerLevel * 0.1f;
+                }
+
+                if (equippedWeaponIndex < shooters.Length)
+                {
+                    shooters[equippedWeaponIndex].enabled = true;
                 }
                 else
                 {
-                    shooters[shooters.Length - 1].enabled = true;
+                    equippedWeaponIndex = shooters.Length - 1;
+                    shooters[equippedWeaponIndex].enabled = true;
                 }
 
                 if (playerLevel < animations.Length)
@@ -64,6 +75,46 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(switchWeapon))
+        {
+            equippedWeaponIndex = equippedWeaponIndex + 1;
+            if (equippedWeaponIndex > playerLevel)
+            {
+                equippedWeaponIndex = 0;
+            }
+            foreach (Shooter shooter in shooters)
+            {
+                shooter.enabled = false;
+            }
+            shooters[equippedWeaponIndex].enabled = true;
+        }
+    }
+
+    public string GetWeaponName()
+    {
+        if (equippedWeaponIndex < weaponNames.Length)
+        {
+            return weaponNames[equippedWeaponIndex];
+        }
+        return "";
+    }
+
+    public float GetDamageMultiplier()
+    {
+        if (equippedWeaponIndex < shooters.Length)
+        {
+            return shooters[equippedWeaponIndex].damageMultiplier;
+        }
+        return 1;
+    }
+
+    public int GetPlayerLevel()
+    {
+        return playerLevel;
     }
 
     public float GetNextLevelProgress()
