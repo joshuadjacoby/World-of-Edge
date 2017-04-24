@@ -1,9 +1,13 @@
 fileFormatVersion: 2
-guid: f9f27aeda2409f94aa4d60c0a7907bd4
-timeCreated: 1492899095
+guid: 0d2d14d32b48af844ba54d4b57b78615
+timeCreated: 1492996234
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Hexagonversion2Sprite_0
+    21300002: Hexagonversion2Sprite_1
+    21300004: Hexagonversion2Sprite_2
+    21300006: Hexagonversion2Sprite_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -68,7 +72,59 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Hexagonversion2Sprite_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 120
+        width: 59
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Hexagonversion2Sprite_1
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 122
+        width: 63
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Hexagonversion2Sprite_2
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 33
+        width: 74
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Hexagonversion2Sprite_3
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 31
+        width: 63
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

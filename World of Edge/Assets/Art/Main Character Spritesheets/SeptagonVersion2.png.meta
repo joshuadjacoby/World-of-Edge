@@ -1,9 +1,13 @@
 fileFormatVersion: 2
-guid: f9f27aeda2409f94aa4d60c0a7907bd4
-timeCreated: 1492899095
+guid: ee2a0220dbe28714c902f40e9eb5e636
+timeCreated: 1492996468
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: SeptagonVersion2_0
+    21300002: SeptagonVersion2_1
+    21300004: SeptagonVersion2_2
+    21300006: SeptagonVersion2_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -68,7 +72,59 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SeptagonVersion2_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 112
+        width: 66
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SeptagonVersion2_1
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 114
+        width: 79
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SeptagonVersion2_2
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 25
+        width: 87
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SeptagonVersion2_3
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 23
+        width: 79
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

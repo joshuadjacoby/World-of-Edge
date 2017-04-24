@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Animations;
 
 public class Player : MonoBehaviour
 {
@@ -8,12 +9,25 @@ public class Player : MonoBehaviour
     // Use this for initialization
 
     public Health health;
-    public Shooter[] shooter;
+    public Shooter[] shooters;
     public int edgeCount = 0;
     public int playerLevel = 0;
     public int[] edgesRequiredForLevels = { 50, 100, 200, 300 };
-    public int currentEquippedShooter;
+    public string[] animations = { "Square", "Pentagon", "Hexagon", "Septagon" };
     public SpriteRenderer spriteRenderer;
+    public Animator animator;
+
+    void Start()
+    {
+        foreach (Shooter shooter in shooters)
+        {
+            shooter.enabled = false;
+        }
+        if (shooters.Length > 0)
+        {
+            shooters[0].enabled = true;
+        }
+    }
 
     public void incrementEdgeCount()
     {
@@ -23,8 +37,31 @@ public class Player : MonoBehaviour
             if (edgeCount >= edgesRequiredForLevels[playerLevel])
             {
                 edgeCount = 0;
+
+                if (playerLevel < shooters.Length)
+                {
+                    shooters[playerLevel].enabled = false;
+                }
+
                 ++playerLevel;
-                ++currentEquippedShooter;
+
+                if (playerLevel < shooters.Length)
+                {
+                    shooters[playerLevel].enabled = true;
+                }
+                else
+                {
+                    shooters[shooters.Length - 1].enabled = true;
+                }
+
+                if (playerLevel < animations.Length)
+                {
+                    animator.Play(animations[playerLevel]);
+                }
+                else
+                {
+                    animator.Play(animations.Length - 1);
+                }
             }
         }
     }
@@ -33,7 +70,7 @@ public class Player : MonoBehaviour
     {
         if (playerLevel < edgesRequiredForLevels.Length)
         {
-            return edgeCount / edgesRequiredForLevels[playerLevel];
+            return (float)edgeCount / (float)edgesRequiredForLevels[playerLevel];
         }
         return 1;
     }

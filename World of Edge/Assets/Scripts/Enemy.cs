@@ -105,7 +105,6 @@ abstract public class Enemy : MonoBehaviour
             if (coll.gameObject.CompareTag("Player"))
             {
                 health.takeDamage(collisionDamage);
-                Destroy(gameObject);
             }
             if (coll.gameObject.CompareTag("Enemy"))
             {
