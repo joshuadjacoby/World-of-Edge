@@ -51,11 +51,14 @@ public class Shooter : MonoBehaviour
                 else
                 {
                     cooldownTimer = cooldown;
-                    Vector3 shootDirection = Input.mousePosition;
-                    shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
-                    shootDirection = shootDirection - transform.position;
-                    shootDirection.y = 0;
-                    shootDirection = shootDirection.normalized;
+                    Vector3 mousePosition = Input.mousePosition;
+                    mousePosition.z = Camera.main.transform.position.y - transform.position.y;
+                    Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+                    mouseWorldPosition.y = transform.position.y;
+                    Vector3 shootDirection = (mouseWorldPosition - transform.position).normalized;
+
+                    //Debug.DrawRay(transform.position, shootDirection * 100, Color.red);
+
                     playerAttack(shootDirection);
                 }
             }

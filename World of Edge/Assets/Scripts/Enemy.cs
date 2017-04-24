@@ -22,8 +22,8 @@ abstract public class Enemy : MonoBehaviour
     protected int enemyType;
     public float deathDelay;
     public int edgesToSpawn;
+    public GameObject edgePrefab;
     private float flashTimer;
-    public Color flashColor;
 
     void Start() {
 
@@ -31,16 +31,19 @@ abstract public class Enemy : MonoBehaviour
 
     public void DoUpdate(float deltaTime)
     {
-        if (flashTimer > 0)
+        if (spriteRenderer != null)
         {
-            float colorDiff = 1 - flashTimer / flashDuration;
-            spriteRenderer.color = flashColor;
-            flashTimer -= deltaTime;
-        }
-        else
-        {
-            spriteRenderer.color = Color.white;
-            flashTimer = 0;
+            if (flashTimer > 0)
+            {
+                float colorDiff = 1 - flashTimer / flashDuration;
+                spriteRenderer.color = new Color(1, colorDiff, colorDiff);
+                flashTimer -= deltaTime;
+            }
+            else
+            {
+                spriteRenderer.color = Color.white;
+                flashTimer = 0;
+            }
         }
         if (health.currentHealth <= 0)
         {
@@ -65,11 +68,11 @@ abstract public class Enemy : MonoBehaviour
     {
         for(int i = 0; i < numEdges; i++)
         {
-            GameObject edge = (GameObject)Instantiate(Resources.Load("Prefabs/Edge"));
             float rngAngle = Random.Range(0, 360);
             float rngSpeed = Random.Range(3, 10);
             Vector3 rngVector = new Vector3(Mathf.Cos(rngAngle), 0, Mathf.Sin(rngAngle));
             Debug.DrawRay(transform.position, rngVector, Color.green, 2f);
+            GameObject edge = Instantiate(edgePrefab);
             edge.GetComponent<Rigidbody>().velocity = rngVector*rngSpeed;
             edge.transform.position = transform.position+rngVector;
             
