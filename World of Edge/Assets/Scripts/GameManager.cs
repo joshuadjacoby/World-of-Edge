@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        edgeText.text = "EDGE:"+player.GetComponent<Player>().getEdgeCount();
+        edgeText.text = "EDGE:"+player.GetComponent<Player>().edgeCount;
         if (playerIsDead()){
             killPlayer();
         }
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
     
     public Sprite getPlayerSprite()
     {
-        return playerSprites[player.GetComponent<Player>().getLevel()];
+        return playerSprites[player.GetComponent<Player>().playerLevel];
     }
     private bool playerIsDead()
     {

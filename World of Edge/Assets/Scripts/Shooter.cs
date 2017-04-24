@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 
+public enum ShootType
+{
+    Single,
+    Multi
+}
+
 public class Shooter : MonoBehaviour
 {
-    public enum BulletType
-    {
-        normal,
-        piercing,
-        ricochet,
-        explosive,
-        spreadShot2,
-        spreadShot3,
-        spreadShot4,
-        spreadShot5
-    }
     public KeyCode shootKey;
     public bool playerControlled;
     public GameObject[] bulletPrefab;
@@ -20,21 +15,23 @@ public class Shooter : MonoBehaviour
     public float damageMultiplier;
     public float bulletSpawnOffset;
     public float spreadVariance;
+    public int equippedBulletPrefabIndex;
+    public ShootType howToShotBullet;
+    public int numBullets = 1;
+    public float degreesBetweenBullets = 10f;
 
     private float cooldownTimer;
     private Transform targetTransform;
-    private Player player;
+
     void Start()
     {
         cooldownTimer = cooldown;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!playerControlled)
         {
             PlayerMovement playerMove = FindObjectOfType<PlayerMovement>();
             if (playerMove != null)
             {
                 targetTransform = playerMove.transform;
-                
             }
         }
     }
@@ -80,55 +77,40 @@ public class Shooter : MonoBehaviour
             }
         }
     }
+
     public void playerAttack(Vector3 shootDirection)
     {
-        BulletType bullet = (BulletType)player.getGunType();
-        //hardcode for testing
-        //bullet = BulletType.explosive;
-        switch (bullet)
+        switch (howToShotBullet)
         {
-            case (BulletType.normal):
-                fireBullet(shootDirection, (int)BulletType.normal, true);
+            case (ShootType.Single):
+                fireBullet(shootDirection, equippedBulletPrefabIndex);
                 break;
-            case (BulletType.piercing):
-                fireBullet(shootDirection, (int)BulletType.piercing, false);
-                break;
-            case (BulletType.ricochet):
-                fireBullet(shootDirection, (int)BulletType.ricochet, true);
-                break;
-            case (BulletType.explosive):
-                fireBullet(shootDirection, (int)BulletType.explosive, false);
-                break;
-            case (BulletType.spreadShot2):
-                multiFire(shootDirection, (int)BulletType.spreadShot2, 2, 10, true);
-                break;
-            case (BulletType.spreadShot3):
-                multiFire(shootDirection, (int)BulletType.spreadShot3, 3, 10, true);
-                break;
-            case (BulletType.spreadShot4):
-                multiFire(shootDirection, (int)BulletType.spreadShot4, 4, 10, true);
-                break;
-            case (BulletType.spreadShot5):
-                multiFire(shootDirection, (int)BulletType.spreadShot5, 5, 10, true);
+            case (ShootType.Multi):
+                if (numBullets % 2 == 0)
+                {
+                    shootDirection = Quaternion.Euler(0, degreesBetweenBullets / 2 - (numBullets / 2 - 1) * degreesBetweenBullets, 0) * shootDirection;
+                    for (int i = 0; i < numBullets; i++)
+                    {
+                        fireBullet(shootDirection, equippedBulletPrefabIndex);
+                        shootDirection = Quaternion.Euler(0, degreesBetweenBullets, 0) * shootDirection;
+                    }
+                }
+                else
+                {
+                    shootDirection = Quaternion.Euler(0, -(numBullets / 2) * degreesBetweenBullets, 0) * shootDirection;
+                    for (int i = 0; i < numBullets; i++)
+                    {
+                        fireBullet(shootDirection, equippedBulletPrefabIndex);
+                        shootDirection = Quaternion.Euler(0, degreesBetweenBullets, 0) * shootDirection;
+                    }
+                }
                 break;
         }
     }
 
-    public void fireBullet(Vector3 shootDirection, int type, bool shapeOverride = false)
+    public void fireBullet(Vector3 shootDirection, int type)
     {
         GameObject bulletObject = (GameObject)Instantiate(bulletPrefab[type]);
-        if (shapeOverride)
-        {
-            Object[] sprites;
-            sprites = Resources.LoadAll("Projectiles");
-
-
-
-            int bulletSpriteIndex = Random.Range(1, sprites.Length);
-
-            bulletObject.GetComponentInChildren<SpriteRenderer>().sprite = (Sprite)sprites[bulletSpriteIndex];
-        }
-        
         BulletParent bullet = bulletObject.GetComponent<BulletParent>();
         bullet.direction = shootDirection;
         bullet.direction += new Vector3(Random.Range(0.0f, spreadVariance), Random.Range(0.0f, spreadVariance), 0.0f);
@@ -138,26 +120,5 @@ public class Shooter : MonoBehaviour
         bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
         //bullet.GetComponent<Rigidbody>().AddTorque(new Vector3(0.0f, 2000.0f, 0.0f));
         bullet.damage *= damageMultiplier;
-    }
-    public void multiFire(Vector3 shootDirection, int type, int numBullets, float degreesBetweenBullets = 10f, bool shapeOverride = false)
-    {
-        if (numBullets % 2 == 0)
-        {
-            shootDirection = Quaternion.Euler(0, degreesBetweenBullets / 2 - (numBullets / 2 - 1) * degreesBetweenBullets, 0) * shootDirection;
-            for (int i = 0; i < numBullets; i++)
-            {
-                fireBullet(shootDirection, type, shapeOverride);
-                shootDirection = Quaternion.Euler(0, degreesBetweenBullets, 0) * shootDirection;
-            }
-        }
-        else
-        {
-            shootDirection = Quaternion.Euler(0, -(numBullets / 2) * degreesBetweenBullets, 0) * shootDirection;
-            for (int i = 0; i < numBullets; i++)
-            {
-                fireBullet(shootDirection, type, shapeOverride);
-                shootDirection = Quaternion.Euler(0, degreesBetweenBullets, 0) * shootDirection;
-            }
-        }
     }
 }
