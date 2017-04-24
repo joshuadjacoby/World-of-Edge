@@ -13,7 +13,7 @@ abstract public class Enemy : MonoBehaviour
     }
 
     public Health health;
-    public MeshRenderer meshRenderer;
+    public SpriteRenderer spriteRenderer;
     public float flashDuration = 0.15f;
     public EnemyManager enemyManager;
     public int collisionDamage;
@@ -23,18 +23,23 @@ abstract public class Enemy : MonoBehaviour
     public float deathDelay;
     public int edgesToSpawn;
     private float flashTimer;
+    public Color flashColor;
+
+    void Start() {
+
+    }
 
     public void DoUpdate(float deltaTime)
     {
         if (flashTimer > 0)
         {
             float colorDiff = 1 - flashTimer / flashDuration;
-            meshRenderer.material.SetColor("_Color", new Color(1, colorDiff, colorDiff));
+            spriteRenderer.color = flashColor;
             flashTimer -= deltaTime;
         }
         else
         {
-            meshRenderer.material.SetColor("_Color", Color.white);
+            spriteRenderer.color = Color.white;
             flashTimer = 0;
         }
         if (health.currentHealth <= 0)
@@ -93,7 +98,7 @@ abstract public class Enemy : MonoBehaviour
 
     public void Flash()
     {
-        meshRenderer.material.SetColor("_Color", Color.red);
+        spriteRenderer.color = Color.red;
         flashTimer = flashDuration;
     }
 
