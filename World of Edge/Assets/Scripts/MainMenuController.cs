@@ -15,6 +15,13 @@ public class MainMenuController : MonoBehaviour {
     private const float INITIALDELAY = 0.2f;
     private const float REPEATDELAY = 0.15f;
     private IEnumerator creditsCoroutine;
+
+    private void Awake()
+    {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+        Object.DontDestroyOnLoad(gameObject);
+    }
     void Start () {
         UnityEngine.EventSystems.EventSystem.current.sendNavigationEvents = !UnityEngine.EventSystems.EventSystem.current.sendNavigationEvents;
     }
