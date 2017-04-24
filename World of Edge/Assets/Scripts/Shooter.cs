@@ -3,7 +3,8 @@
 public enum ShootType
 {
     Single,
-    Multi
+    Multi,
+    Sin
 }
 
 public class Shooter : MonoBehaviour
@@ -88,7 +89,7 @@ public class Shooter : MonoBehaviour
             case (ShootType.Multi):
                 if (numBullets % 2 == 0)
                 {
-                    shootDirection = Quaternion.Euler(0, degreesBetweenBullets / 2 - (numBullets / 2 - 1) * degreesBetweenBullets, 0) * shootDirection;
+                    shootDirection = Quaternion.Euler(0, degreesBetweenBullets / 2 - (numBullets / 2) * degreesBetweenBullets, 0) * shootDirection;
                     for (int i = 0; i < numBullets; i++)
                     {
                         fireBullet(shootDirection, equippedBulletPrefabIndex);
@@ -105,6 +106,10 @@ public class Shooter : MonoBehaviour
                     }
                 }
                 break;
+            case ShootType.Sin:
+                fireSinBullets(shootDirection, equippedBulletPrefabIndex);
+                break;
+
         }
     }
 
@@ -120,5 +125,25 @@ public class Shooter : MonoBehaviour
         bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
         //bullet.GetComponent<Rigidbody>().AddTorque(new Vector3(0.0f, 2000.0f, 0.0f));
         bullet.damage *= damageMultiplier;
+    }
+    public void fireSinBullets(Vector3 shootDirection, int type)
+    {
+        for(int i = 0; i < numBullets; i++)
+        {
+            GameObject bulletObject = (GameObject)Instantiate(bulletPrefab[type]);
+            SinBullet bullet = bulletObject.GetComponent<SinBullet>();
+            bullet.direction = shootDirection;
+            bullet.direction += new Vector3(Random.Range(0.0f, spreadVariance), Random.Range(0.0f, spreadVariance), 0.0f);
+
+            bullet.transform.position = transform.position + bulletSpawnOffset * shootDirection;
+
+            bullet.transform.rotation = Quaternion.LookRotation(bullet.direction, Vector3.up);
+            //bullet.GetComponent<Rigidbody>().AddTorque(new Vector3(0.0f, 2000.0f, 0.0f));
+            bullet.damage *= damageMultiplier;
+            if (i%2 == 0)
+            {
+                bullet.flipX = true;
+            }
+        }
     }
 }

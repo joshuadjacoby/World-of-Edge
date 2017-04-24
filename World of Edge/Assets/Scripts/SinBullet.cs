@@ -9,6 +9,7 @@ public class SinBullet : BulletParent {
     public float oscilliationSpeed;
     public float oscillationMagnitude;
     private float timer;
+    public bool flipX = false;
 	void Start () {
         orthoVelocity = 0;
         timer = 0;
@@ -16,8 +17,17 @@ public class SinBullet : BulletParent {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
         timer += oscilliationSpeed * Time.deltaTime;
-        orthoVelocity = oscillationMagnitude * Mathf.Cos(timer);
+        
+        if (flipX)
+        {
+            orthoVelocity = -oscillationMagnitude * Mathf.Cos(timer);
+        } else
+        {
+            orthoVelocity = oscillationMagnitude * Mathf.Cos(timer);
+        }
+        
         GetComponent<Rigidbody>().velocity = direction * speed + orthoVelocity*transform.right;
         updateLifeTime();
         
