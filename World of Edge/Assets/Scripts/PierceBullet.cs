@@ -6,12 +6,12 @@ public class PierceBullet : BulletParent {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        move();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        move();
+        
         updateLifeTime();
 	}
     void OnCollisionEnter(Collision collision)
