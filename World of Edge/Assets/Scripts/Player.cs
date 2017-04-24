@@ -103,6 +103,19 @@ public class Player : MonoBehaviour
         return "";
     }
 
+    public string GetNextWeaponName()
+    {
+        if (equippedWeaponIndex + 1 < weaponNames.Length)
+        {
+            return weaponNames[equippedWeaponIndex + 1];
+        }
+        else if (equippedWeaponIndex < weaponNames.Length)
+        {
+            return weaponNames[equippedWeaponIndex];
+        }
+        return "";
+    }
+
     public float GetDamageMultiplier()
     {
         if (equippedWeaponIndex < shooters.Length)
