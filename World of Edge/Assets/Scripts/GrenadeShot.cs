@@ -25,13 +25,13 @@ public class GrenadeShot : BulletParent {
                     enemy.Flash();
                 }
                 health.takeDamage((int)damage);
-                Instantiate(explosion, transform.position, Quaternion.identity);
+                Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
                 Destroy(gameObject);
             }
         }
         if (collision.gameObject.tag == "Wall")
         {
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
         }
     }
