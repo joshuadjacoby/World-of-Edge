@@ -2,92 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     // Use this for initialization
-    
-    private Health health;
-    private int edgeCount;
-    private int playerLevel;
-    private const int TO_LVL_1 = 50;
-    private const int TO_LVL_2 = 100;
-    private const int TO_LVL_3 = 200;
-    private const int TO_LVL_4 = 300;
-    private const int HIGH_VELOCITY = 0;
-    private const int PIERCING = 1;
-    private const int RICOCHET = 2;
-    private const int EXPLOSIVE = 3;
-    private const int SPREAD2 = 4;
-    private const int SPREAD3 = 5;
-    private const int SPREAD4 = 6;
-    private const int SPREAD5 = 7;
-    private int[] edgeReqs;
-    public int gun;
-    private int nextGun;
-    private SpriteRenderer playerRenderer;
-    void Start () {
-        //health = GetComponent<Health>();
-        edgeCount = 0;
-        playerLevel = 0;
-        playerRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
-        edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
-        gun = HIGH_VELOCITY;
-        
-        nextGun = (int)Random.Range(1, 7.99999f);
-            
-    }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    public Health health;
+    public Shooter[] shooter;
+    public int edgeCount = 0;
+    public int playerLevel = 0;
+    public int[] edgesRequiredForLevels = { 50, 100, 200, 300 };
+    public int currentEquippedShooter;
+    public SpriteRenderer spriteRenderer;
+
     public void incrementEdgeCount()
     {
-        edgeCount++;
-        if (edgeCount >= getEdgesToNextLevel())
+        if (playerLevel < edgesRequiredForLevels.Length - 1)
         {
-            edgeCount = 0;
-            playerLevel++;
-            getNewGun();
-        }
-
-    }
-    public int getEdgesToNextLevel()
-    {
-        if(playerLevel >= edgeReqs.Length)
-        {
-            return 500;
-        }
-        return edgeReqs[playerLevel];
-    }
-    public int getGunType()
-    {
-        return gun;
-    }
-    public int getNextGunType()
-    {
-        return nextGun;
-    }
-    private void getNewGun()
-    {
-        gun = nextGun;
-        while (true)
-        {
-            nextGun = (int)Random.Range(0, 7.9999f);
-            if(nextGun != gun)
+            edgeCount++;
+            if (edgeCount >= edgesRequiredForLevels[playerLevel])
             {
-                break;
+                edgeCount = 0;
+                ++playerLevel;
+                ++currentEquippedShooter;
             }
         }
     }
-    public int getEdgeCount()
+
+    public float GetNextLevelProgress()
     {
-        return edgeCount;
+        if (playerLevel < edgesRequiredForLevels.Length)
+        {
+            return edgeCount / edgesRequiredForLevels[playerLevel];
+        }
+        return 1;
     }
-    public int getLevel()
-    {
-        return playerLevel;
-    }
+
     /*
     public void flash()
     {
@@ -116,21 +66,23 @@ public class Player : MonoBehaviour {
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            if(elapsedTime % (flashSpeed*2) > flashSpeed)
+            if (elapsedTime % (flashSpeed * 2) > flashSpeed)
             {
-                playerRenderer.enabled = false;
-            } else
+                spriteRenderer.enabled = false;
+            }
+            else
             {
-                playerRenderer.enabled = true;
+                spriteRenderer.enabled = true;
             }
             yield return null;
         }
-        playerRenderer.enabled = true;
+        spriteRenderer.enabled = true;
     }
+
     void OnCollisionEnter(Collision coll)
     {
         EdgePickup edge = coll.gameObject.GetComponent<EdgePickup>();
-        if(edge != null)
+        if (edge != null)
         {
             incrementEdgeCount();
             Destroy(coll.gameObject);
