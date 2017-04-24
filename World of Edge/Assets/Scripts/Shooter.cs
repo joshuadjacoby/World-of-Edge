@@ -52,6 +52,7 @@ public class Shooter : MonoBehaviour
                     cooldownTimer = cooldown;
                     Vector3 shootDirection = Input.mousePosition;
                     shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
+                    Debug.Log(shootDirection);
                     shootDirection = shootDirection - transform.position;
                     shootDirection.y = 0;
                     shootDirection = shootDirection.normalized;
