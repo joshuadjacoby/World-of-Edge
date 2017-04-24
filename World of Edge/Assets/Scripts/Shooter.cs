@@ -83,7 +83,7 @@ public class Shooter : MonoBehaviour
     {
         BulletType bullet = (BulletType)player.getGunType();
         //hardcode for testing
-        bullet = BulletType.explosive;
+        //bullet = BulletType.explosive;
         switch (bullet)
         {
             case (BulletType.normal):

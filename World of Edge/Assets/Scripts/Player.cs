@@ -22,14 +22,14 @@ public class Player : MonoBehaviour {
     private const int SPREAD4 = 6;
     private const int SPREAD5 = 7;
     private int[] edgeReqs;
-    private int gun;
+    public int gun;
     private int nextGun;
-    private MeshRenderer playerRenderer;
+    private SpriteRenderer playerRenderer;
     void Start () {
         //health = GetComponent<Health>();
         edgeCount = 0;
         playerLevel = 0;
-        playerRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+        playerRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
         edgeReqs = new int[4] {TO_LVL_1,TO_LVL_2,TO_LVL_3,TO_LVL_4};
         gun = HIGH_VELOCITY;
         
