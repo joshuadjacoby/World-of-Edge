@@ -28,14 +28,14 @@ public class GluerAI : Enemy {
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-
+        /*
         foreach(GameObject enemy in enemyManager.enemyList) {
             float currDistance = Vector3.Distance(position, enemy.transform.position);
             if (currDistance < distance) {
                 distance = currDistance;
                 closest = enemy;
             }
-        }
+        }*/
         return closest;
     }
 

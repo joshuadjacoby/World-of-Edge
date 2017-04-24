@@ -18,15 +18,16 @@ abstract public class Enemy : MonoBehaviour
     public EnemyManager enemyManager;
     public int collisionDamage;
     private bool AIActive = true;
-    protected GameObject player;
+    protected Player player;
     protected int enemyType;
     public float deathDelay;
     public int edgesToSpawn;
     public GameObject edgePrefab;
     private float flashTimer;
 
-    void Start() {
-
+    public void DoStart()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     public void DoUpdate(float deltaTime)
@@ -49,6 +50,8 @@ abstract public class Enemy : MonoBehaviour
         {
             //deglue();
             //StartCoroutine(destroyAfterDelay(deathDelay));
+            enemyManager.enemyList.Remove(gameObject);
+            ++player.combo;
             edgeExplosion(edgesToSpawn);
             Destroy(gameObject);
         }

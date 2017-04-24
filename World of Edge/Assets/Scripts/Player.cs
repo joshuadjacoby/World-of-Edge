@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public string[] weaponNames = { "Rapid Fire", "Shotgun", "Cow", "Sine Gun", "Super Ricochet" };
     public SpriteRenderer spriteRenderer;
     public Animator animator;
+    public int combo = 0;
 
     void Start()
     {
@@ -33,55 +34,58 @@ public class Player : MonoBehaviour
 
     public void incrementEdgeCount()
     {
-        if (playerLevel < edgesRequiredForLevels.Length - 1)
+        edgeCount++;
+        int edgesRequired = edgesRequiredForLevels[edgesRequiredForLevels.Length - 1];
+        if (playerLevel < edgesRequiredForLevels.Length)
         {
-            edgeCount++;
-            if (edgeCount >= edgesRequiredForLevels[playerLevel])
-            {
-                edgeCount = 0;
+            edgesRequired = edgesRequiredForLevels[playerLevel];
+        }
+        if (edgeCount >= edgesRequired)
+        {
+            edgeCount = 0;
 
+            if (playerLevel + 1 < shooters.Length)
+            {
                 foreach (Shooter shooter in shooters)
                 {
                     shooter.enabled = false;
                 }
+            }
 
-                ++playerLevel;
+            ++playerLevel;
+            health.currentHealth = health.maxHealth;
+
+            if (playerLevel < shooters.Length && equippedWeaponIndex < shooters.Length)
+            {
                 equippedWeaponIndex = playerLevel;
-                health.currentHealth = health.maxHealth;
+                shooters[equippedWeaponIndex].enabled = true;
+            }
 
-                foreach (Shooter shooter in shooters)
-                {
-                    shooter.damageMultiplier = 1 + playerLevel * 0.1f;
-                }
-
-                if (equippedWeaponIndex < shooters.Length)
-                {
-                    shooters[equippedWeaponIndex].enabled = true;
-                }
-                else
-                {
-                    equippedWeaponIndex = shooters.Length - 1;
-                    shooters[equippedWeaponIndex].enabled = true;
-                }
-
-                if (playerLevel < animations.Length)
-                {
-                    animator.Play(animations[playerLevel]);
-                }
-                else
-                {
-                    animator.Play(animations.Length - 1);
-                }
+            if (playerLevel < animations.Length)
+            {
+                animator.Play(animations[playerLevel]);
+            }
+            else
+            {
+                animator.Play(animations.Length - 1);
             }
         }
     }
 
     void Update()
     {
+        foreach (Shooter shooter in shooters)
+        {
+            shooter.damageMultiplier = 1 + playerLevel * 0.1f + combo * 0.01f;
+        }
         if (Input.GetKeyDown(switchWeapon))
         {
             equippedWeaponIndex = equippedWeaponIndex + 1;
             if (equippedWeaponIndex > playerLevel)
+            {
+                equippedWeaponIndex = 0;
+            }
+            if (equippedWeaponIndex >= shooters.Length)
             {
                 equippedWeaponIndex = 0;
             }
@@ -104,24 +108,16 @@ public class Player : MonoBehaviour
 
     public string GetNextWeaponName()
     {
-        if (equippedWeaponIndex + 1 < weaponNames.Length)
+        if (playerLevel + 1 < weaponNames.Length)
         {
-            return weaponNames[equippedWeaponIndex + 1];
+            return weaponNames[playerLevel + 1];
         }
-        else if (equippedWeaponIndex < weaponNames.Length)
-        {
-            return weaponNames[equippedWeaponIndex];
-        }
-        return "";
+        return "All Weapons Unlocked";
     }
 
     public float GetDamageMultiplier()
     {
-        if (equippedWeaponIndex < shooters.Length)
-        {
-            return shooters[equippedWeaponIndex].damageMultiplier;
-        }
-        return 1;
+        return shooters[equippedWeaponIndex].damageMultiplier;
     }
 
     public int GetPlayerLevel()
@@ -135,7 +131,7 @@ public class Player : MonoBehaviour
         {
             return (float)edgeCount / (float)edgesRequiredForLevels[playerLevel];
         }
-        return 1;
+        return (float)edgeCount / (float)edgesRequiredForLevels[edgesRequiredForLevels.Length - 1];
     }
 
     /*

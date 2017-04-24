@@ -10,11 +10,12 @@ public class TurretMoveAI : Enemy {
     private GameObject targetEnemy;
     private TurretShootAI turretShootAI;
     private Transform moveTowards;
-    void Start () {
+    void Start ()
+    {
+        DoStart();
         turretShootAI = GetComponentInChildren<TurretShootAI>();
         //turretShootAI.enabled = false;
         //When glued to something, activate turretShootAI
-        player = GameObject.FindGameObjectWithTag("Player");
         enemyType = (int)enemyTypes.TURRET;
         agent = GetComponent<NavMeshAgent>();
         foreach (TurretBaseAI turretBase in FindObjectsOfType<TurretBaseAI>())

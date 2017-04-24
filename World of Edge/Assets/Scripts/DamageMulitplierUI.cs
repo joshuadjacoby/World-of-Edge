@@ -30,10 +30,6 @@ public class DamageMulitplierUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (playerObject.GetDamageMultiplier() != localDamageMultiplier)
-        {
-            damageMuliplierText.text = playerObject.GetDamageMultiplier() + multiplierString;
-            localDamageMultiplier = playerObject.GetDamageMultiplier();
-        }
-	}
+        damageMuliplierText.text = "Damage Multiplier: " + playerObject.GetDamageMultiplier() + multiplierString;
+    }
 }

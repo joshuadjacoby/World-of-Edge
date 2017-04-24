@@ -7,11 +7,11 @@ public class TurretShootAI : Enemy {
     // Use this for initialization
     private bool LOS;
     private const float LOSREPEAT = 0.2f;
-    private GameObject player;
     public float fireDelay;
     private float fireTimer;
-    void Start () {
-        player = GameObject.FindGameObjectWithTag("Player");
+    void Start ()
+    {
+        DoStart();
         fireTimer = 0;
         StartCoroutine(LOSLoop());
 	}

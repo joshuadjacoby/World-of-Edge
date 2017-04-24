@@ -15,9 +15,10 @@ public class Health : MonoBehaviour
     private bool hpBarCreated = false;
     private GameObject backGO, healthGO;
     private bool isInvuln;
-    private const float INVULN_PERIOD = 1.5f;
+    public float INVULN_PERIOD = 1f;
     public Color backColor = new Color(0.2f, 0.0f, 0.0f, 0.5f);
     public Color innerColor = new Color(255f, 0.0f, 0.0f, 0.5f);
+    public Player player;
     private void Start()
     {
 
@@ -111,6 +112,10 @@ public class Health : MonoBehaviour
     {
         if (!getInvuln())
         {
+            if (player != null)
+            {
+                player.combo = 0;
+            }
             currentHealth -= damage;
             if(gameObject.GetComponent<Player>() != null)
             {

@@ -21,7 +21,7 @@ public class Bullet : BulletParent
             {
                 enemy.Flash();
             }
-            health.takeDamage((int)damage);
+            health.takeDamage(damage);
             Destroy(gameObject);
         }
         else

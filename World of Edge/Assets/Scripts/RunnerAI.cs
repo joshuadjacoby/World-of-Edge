@@ -10,7 +10,7 @@ public class RunnerAI : Enemy {
     private NavMeshAgent agent;
 
     void Start () {
-        player = GameObject.FindGameObjectWithTag("Player");
+        DoStart();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = player.transform.position;
         enemyType = (int)enemyTypes.RUNNERAI;

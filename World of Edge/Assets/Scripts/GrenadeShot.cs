@@ -24,7 +24,7 @@ public class GrenadeShot : BulletParent {
                 {
                     enemy.Flash();
                 }
-                health.takeDamage((int)damage);
+                health.takeDamage(damage);
                 Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
                 Destroy(gameObject);
             }

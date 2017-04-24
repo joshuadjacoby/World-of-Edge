@@ -24,7 +24,7 @@ public class SuperRicochetBullet : BulletParent {
             {
                 enemy.Flash();
             }
-            health.takeDamage((int)damage);
+            health.takeDamage(damage);
             direction = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
             transform.rotation = Quaternion.LookRotation(direction);
         }

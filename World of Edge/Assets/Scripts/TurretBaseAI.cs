@@ -11,14 +11,15 @@ public class TurretBaseAI : Enemy {
     public float fireDelay;
     private float fireTimer;
     private NavMeshAgent agent;
-    private Collider playerCollider;
+    //private Collider playerCollider;
     private bool LOS;
     private const float LOSREPEAT = 0.5f;
 
     //get generic shoot script
-    void Start () {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerCollider = player.GetComponent<Collider>();
+    void Start ()
+    {
+        DoStart();
+        //playerCollider = player.GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = player.transform.position;
         LOS = false;
@@ -29,6 +30,7 @@ public class TurretBaseAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
+        /*
         if(LOS && (agent.transform.position-transform.position).magnitude < shootRadius)
         {
             agent.destination = transform.position;
@@ -46,7 +48,8 @@ public class TurretBaseAI : Enemy {
         {
             fireTimer = 0;
             agent.destination = player.transform.position;
-        }
+        }*/
+        agent.destination = player.transform.position;
         DoUpdate(Time.deltaTime);
     }
     private IEnumerator LOSLoop()

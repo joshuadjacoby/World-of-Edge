@@ -44,13 +44,13 @@ public class Shooter : MonoBehaviour
     {
         if (playerControlled)
         {
+            if (cooldownTimer > 0)
+            {
+                cooldownTimer -= Time.deltaTime;
+            }
             if (Input.GetKey(shootKey))
             {
-                if (cooldownTimer > 0)
-                {
-                    cooldownTimer -= Time.deltaTime;
-                }
-                else
+                if (cooldownTimer <= 0)
                 {
                     if (shootSound != null)
                     {

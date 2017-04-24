@@ -20,7 +20,7 @@ public class PierceBullet : BulletParent {
         if (health != null)
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            health.takeDamage((int)damage);
+            health.takeDamage(damage);
             if (enemy != null)
             {
                 enemy.Flash();
