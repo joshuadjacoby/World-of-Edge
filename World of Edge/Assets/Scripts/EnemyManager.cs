@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject[] enemyPrefabs;
     public float[] probabilites;
+    public Transform[] spawnLocations;
     public float spawnInterval;
     public float intervalVariance;
     public int waveSize;
@@ -60,7 +61,7 @@ public class EnemyManager : MonoBehaviour
                     }
 
                     GameObject toAdd = Instantiate(enemyPrefabs[probabilityIndex]);
-                    toAdd.transform.position = transform.position;
+                    toAdd.transform.position = spawnLocations[Random.Range(0, spawnLocations.Length)].position;
                     toAdd.GetComponent<Enemy>().enemyManager = this;
                     enemyList.Add(toAdd);
                 }
