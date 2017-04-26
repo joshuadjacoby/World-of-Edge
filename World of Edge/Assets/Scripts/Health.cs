@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class Health : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Health : MonoBehaviour
     public float INVULN_PERIOD = 1f;
     public Color backColor = new Color(0.2f, 0.0f, 0.0f, 0.5f);
     public Color innerColor = new Color(255f, 0.0f, 0.0f, 0.5f);
-    public Player player;
+    public float knockBack;
     private void Start()
     {
 
@@ -102,7 +103,6 @@ public class Health : MonoBehaviour
         healthBar.rectTransform.pivot = Vector2.zero;
     }
 
-
     private void OnDestroy()
     {
         Destroy(healthBar);
@@ -112,15 +112,18 @@ public class Health : MonoBehaviour
     {
         if (!getInvuln())
         {
+            currentHealth -= damage;
+            Player player = gameObject.GetComponent<Player>();
+            Enemy enemy = gameObject.GetComponent<Enemy>();
             if (player != null)
             {
                 player.combo = 0;
-            }
-            currentHealth -= damage;
-            if(gameObject.GetComponent<Player>() != null)
-            {
                 setInvulnPeriod(INVULN_PERIOD);
                 gameObject.GetComponent<Player>().flashInvuln(INVULN_PERIOD);
+            }
+            if (enemy != null)
+            {
+                enemy.GetComponent<NavMeshAgent>().velocity = enemy.GetComponent<NavMeshAgent>().velocity * knockBack;
             }
         }
         
